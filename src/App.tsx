@@ -2,6 +2,7 @@ import { useState } from 'react';
 import reactLogo from './assets/react.svg';
 import viteLogo from './assets/vite.svg';
 import heroImg from './assets/hero.png';
+import BuggyButton from './components/buggy-button';
 import './App.css';
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         </div>
         <div>
           <h1>Get started</h1>
+          <BuggyButton />
           <p>
             Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
           </p>
