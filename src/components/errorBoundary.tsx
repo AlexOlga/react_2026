@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { TEXTS } from '../shared/text';
+import { buttonStyles } from '../shared/styles/button';
 
 type ErrorState = {
   hasError: boolean;
@@ -28,9 +29,14 @@ class ErrorBoundary extends React.Component<ErrorProps, ErrorState> {
   render() {
     if (this.state.hasError) {
       return (
-        <p>
-          {this.state.error?.message ?? TEXTS.error.fallback}{' '}
-          <button onClick={this.reset}>{TEXTS.error.retry}</button>
+        <p className="flex justify-center  gap-2 items-center mt-4">
+          {this.state.error?.message ?? TEXTS.error.fallback}
+          <button
+            className={`${buttonStyles.base} ${buttonStyles.red}`}
+            onClick={this.reset}
+          >
+            {TEXTS.error.retry}
+          </button>
         </p>
       );
     }
