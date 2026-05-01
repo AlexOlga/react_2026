@@ -7,6 +7,7 @@ import type { Pokemon } from './types/pokemon';
 import loadFromLocalStorage from './utils/loadFromLocalStorage';
 import { LOCAL_QUERY, PAGE_LIMIT } from './constant/global';
 import saveFromLocalStorage from './utils/saveFromLocalStorage';
+import Card from './components/cardPokemon';
 
 type stateApp = {
   searchQuery: string;
@@ -33,16 +34,14 @@ class App extends React.Component<unknown, stateApp> {
         : await getPokemonByName(query);
 
     this.setState({ pokemons });
-    console.log(this.state.searchQuery, pokemons);
   }
   async newSearch(newQuery: string) {
     saveFromLocalStorage(LOCAL_QUERY, newQuery);
     this.setState({ searchQuery: newQuery });
     await this.fetchPokemonsByQuery(newQuery);
-
-    console.log('new', this.state);
   }
   render() {
+    console.log(this.state);
     return (
       <>
         <section id="center">
@@ -51,6 +50,11 @@ class App extends React.Component<unknown, stateApp> {
               newSearch={this.newSearch}
               searchQuery={this.state.searchQuery}
             />
+            {this.state.pokemons.length !== 0 && this.state.pokemons[0].id ? (
+              <Card {...this.state.pokemons[0]} />
+            ) : (
+              'non'
+            )}
             <BuggyButton />
           </div>
         </section>
