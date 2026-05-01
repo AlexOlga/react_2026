@@ -10,7 +10,6 @@ async function getPokemons(limit: number): Promise<Pokemon[]> {
       throw new Error(errorMessages.notFound);
     }
     const data: PokemonResponse = await res.json();
-    console.log(data.results);
     return data.results;
   } catch (error) {
     console.error('Fetch error:', error);

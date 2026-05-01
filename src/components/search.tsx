@@ -2,18 +2,18 @@ import * as React from 'react';
 import { TEXTS } from '../shared/text';
 import { buttonStyles } from '../shared/styles/button';
 import { inputStyles } from '../shared/styles/input';
-import { LOCAL_QUERY } from '../constant/global';
-import loadFromLocalStorage from '../utils/loadFromLocalStorage';
-import saveFromLocalStorage from '../utils/saveFromLocalStorage';
 
 type SearchState = {
   query: string;
 };
-
-class Search extends React.Component<unknown, SearchState> {
-  constructor(props: unknown) {
+type SearchProps = {
+  newSearch: (s: string) => void;
+  searchQuery: string;
+};
+class Search extends React.Component<SearchProps, SearchState> {
+  constructor(props: SearchProps) {
     super(props);
-    this.state = { query: loadFromLocalStorage(LOCAL_QUERY) };
+    this.state = { query: props.searchQuery };
     this.handleSearch = this.handleSearch.bind(this);
     this.changeQuery = this.changeQuery.bind(this);
   }
@@ -23,7 +23,7 @@ class Search extends React.Component<unknown, SearchState> {
   }
   handleSearch() {
     const trimmed = this.state.query.trim();
-    saveFromLocalStorage(LOCAL_QUERY, trimmed);
+    this.props.newSearch(trimmed);
   }
   render() {
     return (
