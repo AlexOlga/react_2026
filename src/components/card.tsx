@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Pokemon } from '../types/pokemon';
+import { cardStyles } from '../shared/styles/card-pokemon';
 const placeholderURL = '/pokemon-placeholder.png';
 
 export default class Card extends React.Component<Pokemon> {
@@ -14,10 +15,14 @@ export default class Card extends React.Component<Pokemon> {
   }
   render() {
     return (
-      <div className="grid grid-cols-3 bg-white rounded-lg p-2 shadow">
-        <img src={this.getImg()} alt={this.props.name} />
-        <span>{this.props.name}</span>
-        <span>{this.props.types[0].type.name || ''}</span>
+      <div className={cardStyles.card}>
+        <img
+          className={cardStyles.img}
+          src={this.getImg()}
+          alt={this.props.name}
+        />
+        <h3 className={cardStyles.title}>{this.props.name}</h3>
+        <p className={cardStyles.text}>{this.props.types[0].type.name || ''}</p>
       </div>
     );
   }

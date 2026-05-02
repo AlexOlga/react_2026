@@ -7,7 +7,7 @@ import type { Pokemon } from './types/pokemon';
 import loadFromLocalStorage from './utils/loadFromLocalStorage';
 import { LOCAL_QUERY, PAGE_LIMIT } from './constant/global';
 import saveFromLocalStorage from './utils/saveFromLocalStorage';
-import Card from './components/cardPokemon';
+import CardList from './components/cardList';
 
 type stateApp = {
   searchQuery: string;
@@ -45,16 +45,12 @@ class App extends React.Component<unknown, stateApp> {
     return (
       <>
         <section id="center">
-          <div>
-            <Search
-              newSearch={this.newSearch}
-              searchQuery={this.state.searchQuery}
-            />
-            {this.state.pokemons.length !== 0 && this.state.pokemons[0].id ? (
-              <Card {...this.state.pokemons[0]} />
-            ) : (
-              'non'
-            )}
+          <Search
+            newSearch={this.newSearch}
+            searchQuery={this.state.searchQuery}
+          />
+          <CardList list={this.state.pokemons} />
+          <div className="flex justify-start p-4">
             <BuggyButton />
           </div>
         </section>
