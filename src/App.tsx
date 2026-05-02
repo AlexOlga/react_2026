@@ -9,11 +9,14 @@ import { LOCAL_QUERY, PAGE_LIMIT } from './constant/global';
 import saveFromLocalStorage from './utils/saveFromLocalStorage';
 import CardList from './components/cardList';
 import Loading from './components/loading';
+import ErrorMessage from './components/ErrorMessage';
 
 type stateApp = {
   searchQuery: string;
   pokemons: Pokemon[];
-  isLoad: boolean;
+  isLoading: boolean;
+  isError: boolean;
+  errorMessage: string;
 };
 
 class App extends React.Component<unknown, stateApp> {
@@ -22,7 +25,9 @@ class App extends React.Component<unknown, stateApp> {
     this.state = {
       searchQuery: loadFromLocalStorage(LOCAL_QUERY) || '',
       pokemons: [],
-      isLoad: false,
+      isLoading: false,
+      isError: false,
+      errorMessage: '',
     };
     this.newSearch = this.newSearch.bind(this);
     this.fetchPokemonsByQuery = this.fetchPokemonsByQuery.bind(this);
@@ -31,19 +36,26 @@ class App extends React.Component<unknown, stateApp> {
     await this.fetchPokemonsByQuery(this.state.searchQuery);
   }
   async fetchPokemonsByQuery(query: string) {
-    const pokemons =
-      query === ''
-        ? await getPokemons(PAGE_LIMIT)
-        : await getPokemonByName(query);
+    try {
+      this.setState({ isError: false, errorMessage: '' });
+      const pokemons =
+        query === ''
+          ? await getPokemons(PAGE_LIMIT)
+          : await getPokemonByName(query);
 
-    this.setState({ pokemons, isLoad: true });
+      this.setState({ pokemons, isLoading: true });
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : 'Something went wrong';
+      this.setState({ isLoading: true, isError: true, errorMessage });
+    }
   }
   async newSearch(newQuery: string) {
-    this.setState({ isLoad: false });
+    this.setState({ isLoading: false });
     saveFromLocalStorage(LOCAL_QUERY, newQuery);
     this.setState({ searchQuery: newQuery });
     await this.fetchPokemonsByQuery(newQuery);
-    this.setState({ isLoad: true });
+    this.setState({ isLoading: true });
   }
   render() {
     return (
@@ -53,8 +65,12 @@ class App extends React.Component<unknown, stateApp> {
             newSearch={this.newSearch}
             searchQuery={this.state.searchQuery}
           />
-          {this.state.isLoad ? (
-            <CardList list={this.state.pokemons} />
+          {this.state.isLoading ? (
+            this.state.isError ? (
+              <ErrorMessage message={this.state.errorMessage} />
+            ) : (
+              <CardList list={this.state.pokemons} />
+            )
           ) : (
             <Loading />
           )}
