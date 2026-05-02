@@ -8,10 +8,12 @@ import loadFromLocalStorage from './utils/loadFromLocalStorage';
 import { LOCAL_QUERY, PAGE_LIMIT } from './constant/global';
 import saveFromLocalStorage from './utils/saveFromLocalStorage';
 import CardList from './components/cardList';
+import Loading from './components/loading';
 
 type stateApp = {
   searchQuery: string;
   pokemons: Pokemon[];
+  isLoad: boolean;
 };
 
 class App extends React.Component<unknown, stateApp> {
@@ -20,6 +22,7 @@ class App extends React.Component<unknown, stateApp> {
     this.state = {
       searchQuery: loadFromLocalStorage(LOCAL_QUERY) || '',
       pokemons: [],
+      isLoad: false,
     };
     this.newSearch = this.newSearch.bind(this);
     this.fetchPokemonsByQuery = this.fetchPokemonsByQuery.bind(this);
@@ -33,23 +36,28 @@ class App extends React.Component<unknown, stateApp> {
         ? await getPokemons(PAGE_LIMIT)
         : await getPokemonByName(query);
 
-    this.setState({ pokemons });
+    this.setState({ pokemons, isLoad: true });
   }
   async newSearch(newQuery: string) {
+    this.setState({ isLoad: false });
     saveFromLocalStorage(LOCAL_QUERY, newQuery);
     this.setState({ searchQuery: newQuery });
     await this.fetchPokemonsByQuery(newQuery);
+    this.setState({ isLoad: true });
   }
   render() {
-    console.log(this.state);
     return (
       <>
-        <section id="center">
+        <section>
           <Search
             newSearch={this.newSearch}
             searchQuery={this.state.searchQuery}
           />
-          <CardList list={this.state.pokemons} />
+          {this.state.isLoad ? (
+            <CardList list={this.state.pokemons} />
+          ) : (
+            <Loading />
+          )}
           <div className="flex justify-start p-4">
             <BuggyButton />
           </div>
