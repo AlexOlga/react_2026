@@ -6,10 +6,11 @@ import getPokemons from './utils/getPokemons';
 import type { Pokemon } from './types/pokemon';
 import loadFromLocalStorage from './utils/loadFromLocalStorage';
 import { LOCAL_QUERY, PAGE_LIMIT } from './constant/global';
+import { errorMessages } from './shared/text';
 import saveFromLocalStorage from './utils/saveFromLocalStorage';
 import CardList from './components/cardList';
 import Loading from './components/loading';
-import ErrorMessage from './components/ErrorMessage';
+import ErrorAlert from './components/ErrorAlert';
 
 type stateApp = {
   searchQuery: string;
@@ -45,9 +46,9 @@ class App extends React.Component<unknown, stateApp> {
 
       this.setState({ pokemons, isLoading: true });
     } catch (error: unknown) {
-      const errorMessage =
-        error instanceof Error ? error.message : 'Something went wrong';
-      this.setState({ isLoading: true, isError: true, errorMessage });
+      const message =
+        error instanceof Error ? error.message : errorMessages.other;
+      this.setState({ isLoading: true, isError: true, errorMessage: message });
     }
   }
   async newSearch(newQuery: string) {
@@ -67,7 +68,7 @@ class App extends React.Component<unknown, stateApp> {
           />
           {this.state.isLoading ? (
             this.state.isError ? (
-              <ErrorMessage message={this.state.errorMessage} />
+              <ErrorAlert message={this.state.errorMessage} />
             ) : (
               <CardList list={this.state.pokemons} />
             )

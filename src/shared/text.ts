@@ -16,4 +16,5 @@ export const TEXTS = {
 export const errorMessages = {
   readingLocalStorage: 'Error reading searchTerm from localStorage',
   notFound: 'Pokemon not found',
+  other: 'Something went wrong',
 };

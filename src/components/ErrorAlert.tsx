@@ -1,6 +1,6 @@
 import React from 'react';
 
-class ErrorMessage extends React.Component<{ message: string }> {
+class ErrorAlert extends React.Component<{ message: string }> {
   render() {
     const { message } = this.props;
     return (
@@ -10,4 +10,4 @@ class ErrorMessage extends React.Component<{ message: string }> {
     );
   }
 }
-export default ErrorMessage;
+export default ErrorAlert;
