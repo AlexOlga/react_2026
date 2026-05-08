@@ -23,7 +23,7 @@ describe('Card component', () => {
   };
 
   test('renders pokemon name', () => {
-        render(<Card {...mockPokemon} />);
+    render(<Card {...mockPokemon} />);
     expect(screen.getByText('pikachu')).toBeInTheDocument();
   });
 
@@ -42,11 +42,11 @@ describe('Card component', () => {
   test('renders placeholder image when image is missing', () => {
     const pokemonWithoutImage: Pokemon = {
       ...mockPokemon,
-      sprites: { },
+      sprites: {},
     };
 
     render(<Card {...pokemonWithoutImage} />);
     const image = screen.getByRole('img');
-    expect(image).toHaveAttribute('src', placeholderURL );
+    expect(image).toHaveAttribute('src', placeholderURL);
   });
 });

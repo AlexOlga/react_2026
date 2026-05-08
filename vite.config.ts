@@ -5,12 +5,12 @@ import tailwindcss from '@tailwindcss/vite';
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-   test: {
+  test: {
     environment: 'jsdom',
     globals: true,
     setupFiles: './src/setupTests.ts',
-      coverage: {
-      provider: 'v8', 
+    coverage: {
+      provider: 'v8',
       reporter: ['text', 'html'],
 
       include: ['src/**/*.{js,jsx,ts,tsx}'],
@@ -19,8 +19,8 @@ export default defineConfig({
         'src/**/*.spec.{js,jsx,ts,tsx}',
         'src/index.{js,jsx,ts,tsx}',
         'src/setupTests.{js,ts}',
-        'src/**/*.d.ts'
-      ],    
+        'src/**/*.d.ts',
+      ],
       thresholds: {
         statements: 80,
         branches: 50,
