@@ -1,7 +1,8 @@
 import React from 'react';
 import type { Pokemon } from '../types/pokemon';
 import { cardStyles } from '../shared/styles/card-pokemon';
-const placeholderURL = '/pokemon-placeholder.png';
+import { placeholderURL } from '../constant/global';
+
 
 export default class Card extends React.Component<Pokemon> {
   constructor(props: Pokemon) {

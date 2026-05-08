@@ -2,7 +2,7 @@ export type Pokemon = {
   id: number;
   name: string;
   url: string;
-  sprites: { back_default: string };
+  sprites?: { back_default?: string };
   types: PokemonType[];
 };
 

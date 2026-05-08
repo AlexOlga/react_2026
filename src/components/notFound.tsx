@@ -4,7 +4,7 @@ const altImg = 'not-found';
 export default class NotFound extends React.Component {
   render() {
     return (
-      <div className="flex item-center justify-center">
+      <div className="flex item-center justify-center" data-testid="not-found">
         <img className="w-4/5 object-cover" src={urlImg} alt={altImg} />
       </div>
     );
