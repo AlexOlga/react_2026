@@ -23,7 +23,9 @@ class Search extends React.Component<SearchProps, SearchState> {
   }
   handleSearch() {
     const trimmed = this.state.query.trim();
-    this.props.newSearch(trimmed);
+    if (trimmed !== this.props.searchQuery) {
+      this.props.newSearch(trimmed);
+    }
   }
   render() {
     return (

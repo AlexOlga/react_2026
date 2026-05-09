@@ -1,7 +1,5 @@
-// BuggyButton.test.tsx
 import { describe, test, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom';
 
 import BuggyButton from './buggyButton';
 import { TEXTS } from '../shared/text';
@@ -13,12 +11,11 @@ describe('BuggyButton component', () => {
     expect(
       screen.getByRole('button', {
         name: TEXTS.buggy.button,
-      }),
+      })
     ).toBeInTheDocument();
   });
 
   test('throws error after button click', () => {
-    
     const consoleError = vi
       .spyOn(console, 'error')
       .mockImplementation(() => {});
