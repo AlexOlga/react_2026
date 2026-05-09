@@ -5,7 +5,6 @@ import CardList from './cardList';
 import { mockPokemonList, mockPokemonListEmpty } from '../__tests__/mocks';
 
 describe('CardList component', () => {
-  
   test('renders correct number of items', () => {
     render(<CardList list={mockPokemonList} />);
     const list = screen.getAllByRole('listitem');
@@ -17,7 +16,6 @@ describe('CardList component', () => {
     expect(screen.getByText('clefairy')).toBeInTheDocument();
   });
   test('renders NotFound when list is empty', () => {
-   
     render(<CardList list={mockPokemonListEmpty} />);
     expect(screen.getByTestId('not-found')).toBeInTheDocument();
   });

@@ -6,8 +6,6 @@ import { placeholderURL } from '../constant/global';
 import { mockPokemon, pokemonWithoutImage } from '../__tests__/mocks';
 
 describe('Card component', () => {
-  
-
   test('renders pokemon name', () => {
     render(<Card {...mockPokemon} />);
     expect(screen.getByText('pikachu')).toBeInTheDocument();
@@ -26,8 +24,6 @@ describe('Card component', () => {
   });
 
   test('renders placeholder image when image is missing', () => {
- 
-
     render(<Card {...pokemonWithoutImage} />);
     const image = screen.getByRole('img');
     expect(image).toHaveAttribute('src', placeholderURL);

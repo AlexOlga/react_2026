@@ -11,7 +11,7 @@ async function baseFetch<T>(url: string): Promise<T> {
   try {
     const res = await fetch(url);
 
-    if (!res.ok) {        
+    if (!res.ok) {
       throw new Error(errorMessagesMap[res.status] || errorMessages.other);
     }
 
