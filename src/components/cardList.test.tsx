@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { describe, test, expect } from 'vitest';
 
 import CardList from './cardList';
-import { mockPokemonList, mockPokemonListEmpty } from '../__tests__/mocks';
+import { mockPokemonList, mockPokemonListEmpty } from '../__mocks__/mocks';
 
 describe('CardList component', () => {
   test('renders correct number of items', () => {

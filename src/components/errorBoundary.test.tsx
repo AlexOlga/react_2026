@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, test, expect } from 'vitest';
 import ErrorBoundary from './errorBoundary';
 import { TEXTS } from '../shared/text';
-import ProblemChild from '../__tests__/problemComponent';
+import ProblemChild from '../__mocks__/problemComponent';
 
 const Problem = () => {
   throw new Error('Test error');

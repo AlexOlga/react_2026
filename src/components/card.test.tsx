@@ -3,7 +3,7 @@ import { describe, test, expect } from 'vitest';
 
 import Card from './card';
 import { placeholderURL } from '../constant/global';
-import { mockPokemon, pokemonWithoutImage } from '../__tests__/mocks';
+import { mockPokemon, pokemonWithoutImage } from '../__mocks__/mocks';
 
 describe('Card component', () => {
   test('renders pokemon name', () => {

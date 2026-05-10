@@ -10,7 +10,7 @@ import { errorMessages } from './shared/text';
 import saveFromLocalStorage from './utils/saveFromLocalStorage';
 import CardList from './components/cardList';
 import Loading from './components/loading';
-import ErrorAlert from './components/ErrorAlert';
+import ErrorAlert from './components/errorAlert';
 
 type stateApp = {
   searchQuery: string;
