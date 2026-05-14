@@ -5,6 +5,8 @@ const Spiner = () => {
       height="40"
       viewBox="0 0 50 50"
       xmlns="http://www.w3.org/2000/svg"
+      role="status"
+      aria-label="Loading"
     >
       <circle
         cx="25"
