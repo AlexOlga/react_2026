@@ -1,9 +1,12 @@
-const urlImg = '/not-found.png';
-const altImg = 'not-found';
+import { NotFoundPage } from '../shared/text';
+
 const NotFound = () => {
   return (
     <div className="flex item-center justify-center" data-testid="not-found">
-      <img className="w-4/5 object-cover" src={urlImg} alt={altImg} />
+      <p>
+        {NotFoundPage.text}
+        <a href="/">{NotFoundPage.link}</a>
+      </p>
     </div>
   );
 };

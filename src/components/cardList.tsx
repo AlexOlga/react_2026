@@ -1,6 +1,6 @@
 import Card from './card';
 import type { Pokemon } from '../types/pokemon';
-import NotFound from './notFound';
+import { errorMessages } from '../shared/text';
 
 type Props = {
   list: Pokemon[];
@@ -10,7 +10,7 @@ const CardList = ({ list }: Props) => {
   return (
     <>
       {list.length === 0 ? (
-        <NotFound />
+        <p>{errorMessages.notFound}</p>
       ) : (
         <ul className="flex gap-4 item-center justify-center flex-wrap p-4 m-0 list-none">
           {list.map((item) => (

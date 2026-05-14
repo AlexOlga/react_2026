@@ -2,11 +2,11 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { describe, test, expect, beforeEach } from 'vitest';
 import { vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
-import App from './App';
-import getPokemons from './utils/getPokemons';
-import getPokemonByName from './utils/getPokemonByName';
-import loadFromLocalStorage from './utils/loadFromLocalStorage';
-import saveFromLocalStorage from './utils/saveFromLocalStorage';
+import App from '../App';
+import getPokemons from '../utils/getPokemons';
+import getPokemonByName from '../utils/getPokemonByName';
+import loadFromLocalStorage from '../utils/loadFromLocalStorage';
+import saveFromLocalStorage from '../utils/saveFromLocalStorage';
 
 vi.mock('./utils/getPokemons');
 vi.mock('./utils/getPokemonByName');
@@ -19,16 +19,16 @@ const mockedLoadFromLocalStorage = vi.mocked(loadFromLocalStorage);
 const mockedSaveFromLocalStorage = vi.mocked(saveFromLocalStorage);
 
 vi.mock('./components/cardList', async () => {
-  return await import('./__mocks__/cardList');
+  return await import('../__mocks__/cardList');
 });
 vi.mock('./components/search', async () => {
-  return await import('./__mocks__/search');
+  return await import('../__mocks__/search');
 });
 vi.mock('./components/loading', async () => {
-  return await import('./__mocks__/loading');
+  return await import('../__mocks__/loading');
 });
 vi.mock('./components/errorAlert', async () => {
-  return await import('./__mocks__/errorAlert');
+  return await import('../__mocks__/errorAlert');
 });
 
 describe('App', () => {
