@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSearchParams } from 'react-router';
 import BuggyButton from '../components/buggyButton';
 import Search from '../components/search';
 import getPokemonByName from '../utils/getPokemonByName';
@@ -16,14 +17,26 @@ import { Pagination } from '../components/pagination';
 const Home = () => {
   const initialSearchQuery = loadFromLocalStorage(LOCAL_QUERY) || '';
 
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentPage = Number(searchParams.get('page')) || 1;
+
   const [pokemons, setPokemons] = React.useState<Pokemon[]>([]);
   const [searchQuery, setSearchQuery] = React.useState(initialSearchQuery);
-
   const [isLoading, setIsLoading] = React.useState(false);
   const [isError, setIsError] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState('');
-  const [currentPage, setCurrentPage] = React.useState<number>(1);
   const [totalPages, setTotalPages] = React.useState<number>(1);
+
+  const fetchPokemonList = async () => {
+    const data = await getPokemons(PAGE_LIMIT, currentPage);
+    setPokemons(data.results);
+    setTotalPages(Math.ceil(data.count / PAGE_LIMIT));
+  };
+  const fetchPokemonSearch = async (query: string) => {
+    const data = await getPokemonByName(query);
+    setPokemons(data);
+    setTotalPages(1);
+  };
 
   const fetchPokemonsByQuery = async (query: string) => {
     try {
@@ -31,13 +44,9 @@ const Home = () => {
       setIsError(false);
       setErrorMessage('');
       if (query.trim() === '') {
-        const data = await getPokemons(PAGE_LIMIT, currentPage);
-        setPokemons(data.results);
-        setTotalPages(Math.ceil(data.count / PAGE_LIMIT));
+        fetchPokemonList();
       } else {
-        const data = await getPokemonByName(query);
-        setPokemons(data);
-        setTotalPages(1);
+        fetchPokemonSearch(query);
       }
     } catch (error: unknown) {
       setIsError(true);
@@ -50,8 +59,9 @@ const Home = () => {
   };
 
   const onPageChange = async (page: number) => {
-    console.log(page);
-    setCurrentPage(page);
+    setSearchParams({
+      page: String(page),
+    });
   };
 
   React.useEffect(() => {
@@ -62,7 +72,9 @@ const Home = () => {
   const newSearch = (newQuery: string) => {
     saveFromLocalStorage(LOCAL_QUERY, newQuery);
     setSearchQuery(newQuery);
-    setCurrentPage(1);
+    setSearchParams({
+      page: '1',
+    });
   };
 
   return (
