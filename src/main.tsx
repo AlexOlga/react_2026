@@ -4,12 +4,15 @@ import './index.css';
 import App from './App.tsx';
 import ErrorBoundary from './components/errorBoundary.tsx';
 import { BrowserRouter } from 'react-router';
+import { SearchProvider } from './context/SearchContext.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ErrorBoundary>
       <BrowserRouter>
-        <App />
+        <SearchProvider>
+          <App />
+        </SearchProvider>
       </BrowserRouter>
     </ErrorBoundary>
   </StrictMode>

@@ -1,17 +1,9 @@
-import { NavLink } from 'react-router';
 import AppRoutes from './routes/routes';
+import Header from './components/header';
 const App = () => {
   return (
     <>
-      <header>
-        {' '}
-        <nav>
-          <NavLink to="/" end>
-            home
-          </NavLink>
-          <NavLink to="/about">about</NavLink>
-        </nav>
-      </header>
+      <Header />
       <AppRoutes />
     </>
   );

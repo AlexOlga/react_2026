@@ -2,26 +2,37 @@ import * as React from 'react';
 import { TEXTS } from '../shared/text';
 import { buttonStyles } from '../shared/styles/button';
 import { inputStyles } from '../shared/styles/input';
+import { useSearch } from '../context/useSearch';
+import saveFromLocalStorage from '../utils/saveFromLocalStorage';
+import { LOCAL_QUERY } from '../constants/global';
+import { useNavigate } from 'react-router';
 
-type SearchProps = {
+/*type SearchProps = {
   newSearch: (s: string) => void;
   searchQuery: string;
-};
-const Search = ({ searchQuery, newSearch }: SearchProps) => {
+};*/
+const Search = () => {
+  const { searchQuery, setSearchQuery } = useSearch();
   const [query, setQuery] = React.useState(searchQuery);
-
+  const navigate = useNavigate();
   const changeQuery = (event: React.ChangeEvent<HTMLInputElement>) => {
     const trimmed = event.target?.value;
     setQuery(trimmed);
   };
+  const newSearch = (newQuery: string) => {
+    saveFromLocalStorage(LOCAL_QUERY, newQuery);
+    setSearchQuery(newQuery);
+    navigate(`/?page=1`);
+  };
   const handleSearch = () => {
     const trimmed = query.trim();
-    if (trimmed !== searchQuery) {
+    newSearch(trimmed);
+    /* if (trimmed !== searchQuery) {
       newSearch(trimmed);
-    }
+    }*/
   };
   return (
-    <div className="mb-6 rounded-xl p-4 shadow-inner">
+    <div className="rounded-xl p-4  w-xl">
       <div className="flex gap-3">
         <input
           type="text"

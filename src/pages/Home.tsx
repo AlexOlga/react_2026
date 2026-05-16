@@ -1,27 +1,23 @@
 import React from 'react';
 import { Outlet, useNavigate, useSearchParams } from 'react-router';
 import BuggyButton from '../components/buggyButton';
-import Search from '../components/search';
 import getPokemonByName from '../utils/getPokemonByName';
 import getPokemons from '../utils/getPokemons';
-import loadFromLocalStorage from '../utils/loadFromLocalStorage';
-import { LOCAL_QUERY, PAGE_LIMIT } from '../constant/global';
+import { PAGE_LIMIT } from '../constants/global';
 import { errorMessages } from '../shared/text';
-import saveFromLocalStorage from '../utils/saveFromLocalStorage';
 import CardList from '../components/cardList';
 import Loading from '../components/loading';
 import ErrorAlert from '../components/errorAlert';
 import type { Pokemon } from '../types/pokemon';
 import { Pagination } from '../components/pagination';
+import { useSearch } from '../context/useSearch';
 
 const Home = () => {
-  const initialSearchQuery = loadFromLocalStorage(LOCAL_QUERY) || '';
-
   const [searchParams] = useSearchParams();
   const currentPage = Number(searchParams.get('page')) || 1;
   const navigate = useNavigate();
   const [pokemons, setPokemons] = React.useState<Pokemon[]>([]);
-  const [searchQuery, setSearchQuery] = React.useState(initialSearchQuery);
+  const { searchQuery } = useSearch();
   const [isLoading, setIsLoading] = React.useState(false);
   const [isError, setIsError] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState('');
@@ -67,28 +63,14 @@ const Home = () => {
     load();
   }, [searchQuery, currentPage]);
 
-  const newSearch = (newQuery: string) => {
-    saveFromLocalStorage(LOCAL_QUERY, newQuery);
-    setSearchQuery(newQuery);
-    navigate(`/?page=1`);
-  };
+  if (isLoading) return <Loading />;
+  if (isError) return <ErrorAlert message={errorMessage} />;
 
   return (
-    <main>
-      <Search newSearch={newSearch} searchQuery={searchQuery} />
-
-      {isLoading ? (
-        <Loading />
-      ) : isError ? (
-        <ErrorAlert message={errorMessage} />
-      ) : (
-        <section>
-          <div className="flex">
-            <CardList list={pokemons} />
-            <div className="w-1/2">
-              <Outlet />
-            </div>
-          </div>
+    <>
+      <div className="flex">
+        <div>
+          <CardList list={pokemons} />
 
           {totalPages > 1 && (
             <div className="flex justify-center p-4">
@@ -99,13 +81,17 @@ const Home = () => {
               />
             </div>
           )}
-        </section>
-      )}
+        </div>
+
+        <div>
+          <Outlet />
+        </div>
+      </div>
 
       <div className="flex justify-center p-4">
         <BuggyButton />
       </div>
-    </main>
+    </>
   );
 };
 

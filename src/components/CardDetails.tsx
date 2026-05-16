@@ -3,7 +3,7 @@ import type { Pokemon } from '../types/pokemon';
 import React from 'react';
 import getPokemonById from '../utils/getPokemonById';
 import Loading from './loading';
-import { placeholderURL } from '../constant/global';
+import { placeholderURL } from '../constants/global';
 
 const CardDetails = () => {
   const [searchParams] = useSearchParams();
@@ -42,7 +42,7 @@ const CardDetails = () => {
     ? pokemon.sprites.back_default
     : placeholderURL;
   return (
-    <aside className="sticky top-0 p-6 border-l border-yellow-400 bg-white h-screen overflow-auto">
+    <aside className="sticky top-0 p-6 border-l border-yellow-400 bg-white h-screen overflow-auto w-80">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-4xl font-bold capitalize text-red-400">
           {pokemon.name}

@@ -1,6 +1,6 @@
 import type { Pokemon } from '../types/pokemon';
 import { cardStyles } from '../shared/styles/card-pokemon';
-import { placeholderURL } from '../constant/global';
+import { placeholderURL } from '../constants/global';
 
 const Card = (data: Pokemon) => {
   const imgURL = data.sprites?.back_default

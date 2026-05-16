@@ -30,3 +30,7 @@ export const NotFoundPage = {
   text: 'Page not found',
   link: 'Back',
 };
+export const navTexts = {
+  home: 'Home',
+  about: 'About',
+};

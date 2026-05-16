@@ -1,4 +1,4 @@
-import { URL_API } from '../constant/global';
+import { URL_API } from '../constants/global';
 import type { Pokemon } from '../types/pokemon';
 import baseFetch from './baseFeatch';
 
