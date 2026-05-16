@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSearchParams } from 'react-router';
+import { Outlet, useNavigate, useSearchParams } from 'react-router';
 import BuggyButton from '../components/buggyButton';
 import Search from '../components/search';
 import getPokemonByName from '../utils/getPokemonByName';
@@ -17,9 +17,9 @@ import { Pagination } from '../components/pagination';
 const Home = () => {
   const initialSearchQuery = loadFromLocalStorage(LOCAL_QUERY) || '';
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const currentPage = Number(searchParams.get('page')) || 1;
-
+  const navigate = useNavigate();
   const [pokemons, setPokemons] = React.useState<Pokemon[]>([]);
   const [searchQuery, setSearchQuery] = React.useState(initialSearchQuery);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -59,9 +59,7 @@ const Home = () => {
   };
 
   const onPageChange = async (page: number) => {
-    setSearchParams({
-      page: String(page),
-    });
+    navigate(`/?page=${page}`);
   };
 
   React.useEffect(() => {
@@ -72,13 +70,11 @@ const Home = () => {
   const newSearch = (newQuery: string) => {
     saveFromLocalStorage(LOCAL_QUERY, newQuery);
     setSearchQuery(newQuery);
-    setSearchParams({
-      page: '1',
-    });
+    navigate(`/?page=1`);
   };
 
   return (
-    <section>
+    <main>
       <Search newSearch={newSearch} searchQuery={searchQuery} />
 
       {isLoading ? (
@@ -86,23 +82,30 @@ const Home = () => {
       ) : isError ? (
         <ErrorAlert message={errorMessage} />
       ) : (
-        <>
-          <CardList list={pokemons} />
+        <section>
+          <div className="flex">
+            <CardList list={pokemons} />
+            <div className="w-1/2">
+              <Outlet />
+            </div>
+          </div>
 
           {totalPages > 1 && (
-            <Pagination
-              currentPage={currentPage}
-              onPageChange={onPageChange}
-              totalPages={totalPages}
-            />
+            <div className="flex justify-center p-4">
+              <Pagination
+                currentPage={currentPage}
+                onPageChange={onPageChange}
+                totalPages={totalPages}
+              />
+            </div>
           )}
-        </>
+        </section>
       )}
 
-      <div className="flex justify-start p-4">
+      <div className="flex justify-center p-4">
         <BuggyButton />
       </div>
-    </section>
+    </main>
   );
 };
 
