@@ -1,12 +1,20 @@
+import { pageStyles } from '../shared/styles/page';
 import { aboutPage } from '../shared/text';
 
 const About = () => {
   return (
-    <div>
-      <h2>{aboutPage.title}</h2>
-      <p>
+    <div className={pageStyles.container}>
+      <h2 className={pageStyles.title}>{aboutPage.title}</h2>
+      <p className={pageStyles.text}>
         {aboutPage.text1}
-        <a href={aboutPage.linkUrl}>{aboutPage.linkText}</a>
+        <a
+          href={aboutPage.linkUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={pageStyles.link}
+        >
+          {aboutPage.linkText}
+        </a>
         {aboutPage.text2}
       </p>
     </div>

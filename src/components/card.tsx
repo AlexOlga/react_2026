@@ -11,7 +11,10 @@ const Card = (data: Pokemon) => {
     <div className={cardStyles.card}>
       <img className={cardStyles.img} src={imgURL} alt={data.name} />
       <h3 className={cardStyles.title}>{data.name}</h3>
-      <p className={cardStyles.text}>{data.types[0].type.name || ''}</p>
+      <p className={cardStyles.text}>
+        <span>Base experience: </span>
+        {data.base_experience}
+      </p>
     </div>
   );
 };

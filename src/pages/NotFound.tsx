@@ -1,11 +1,14 @@
+import { pageStyles } from '../shared/styles/page';
 import { NotFoundPage } from '../shared/text';
 
 const NotFound = () => {
   return (
-    <div className="flex item-center justify-center" data-testid="not-found">
-      <p>
+    <div className={pageStyles.container} data-testid="not-found">
+      <p className={pageStyles.text}>
         {NotFoundPage.text}
-        <a href="/">{NotFoundPage.link}</a>
+        <a href="/" className={pageStyles.link}>
+          {NotFoundPage.link}
+        </a>
       </p>
     </div>
   );

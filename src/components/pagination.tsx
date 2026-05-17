@@ -12,7 +12,7 @@ export const Pagination = ({
   onPageChange,
 }: Props) => {
   return (
-    <div>
+    <div className="flex justify-center  items-center gap-x-8">
       <button
         type="button"
         disabled={currentPage === 1}
