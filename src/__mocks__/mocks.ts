@@ -4,6 +4,10 @@ export const mockPokemon: Pokemon = {
   id: 1,
   name: 'pikachu',
   url: 'https://example.com',
+  base_experience: '134',
+  weight: 60,
+  height: 7,
+  abilities: [],
   sprites: {
     back_default: 'https://example.com/pikachu.png',
   },
@@ -23,6 +27,10 @@ export const mockPokemonList: Pokemon[] = [
     id: 1,
     name: 'pikachu',
     url: 'https://example.com',
+    base_experience: '134',
+    weight: 5,
+    height: 7,
+    abilities: [],
     sprites: {
       back_default: 'https://example.com/pikachu.png',
     },
@@ -37,6 +45,10 @@ export const mockPokemonList: Pokemon[] = [
     id: 2,
     name: 'clefairy',
     url: 'https://example.com',
+    base_experience: '1342',
+    weight: 52,
+    height: 72,
+    abilities: [],
     sprites: {
       back_default: 'https://example.com/clefairy.png',
     },
@@ -50,3 +62,7 @@ export const mockPokemonList: Pokemon[] = [
 ];
 export const mockPokemonListEmpty: Pokemon[] = [];
 export const mockErrorMessage = { message: 'test error' };
+export const mockPokemonData = {
+  count: 125,
+  results: mockPokemonList,
+};

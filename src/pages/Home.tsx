@@ -40,9 +40,9 @@ const Home = () => {
       setIsError(false);
       setErrorMessage('');
       if (query.trim() === '') {
-        fetchPokemonList();
+        await fetchPokemonList();
       } else {
-        fetchPokemonSearch(query);
+        await fetchPokemonSearch(query);
       }
     } catch (error: unknown) {
       setIsError(true);

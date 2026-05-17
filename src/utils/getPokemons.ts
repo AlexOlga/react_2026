@@ -21,7 +21,6 @@ async function getPokemonsUrl(
   const data: PokemonResponse = await baseFetch(
     `${URL_API}${API_QUERY.offset}${offset}&${API_QUERY.limit}${limit}`
   );
-  console.log(data);
   return data;
 }
 async function getPokemonsData(pokemons: PokemonUrl[]): Promise<Pokemon[]> {

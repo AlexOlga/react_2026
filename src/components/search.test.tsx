@@ -1,12 +1,29 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, test, expect } from 'vitest';
-import { vi } from 'vitest';
 import Search from './search';
 import { TEXTS } from '../shared/text';
+import { MemoryRouter } from 'react-router';
+import { SearchProvider } from '../context/SearchContext';
+import { vi } from 'vitest';
+import useLocalStorage from '../hooks/useLocalStorage';
+import userEvent from '@testing-library/user-event';
+
+vi.mock('../hooks/useLocalStorage', () => {
+  return {
+    default: vi.fn(),
+  };
+});
 
 describe('Search component', () => {
   test('renders input and button', () => {
-    render(<Search newSearch={vi.fn()} searchQuery="" />);
+    vi.mocked(useLocalStorage).mockReturnValue(['', vi.fn()]);
+    render(
+      <MemoryRouter>
+        <SearchProvider>
+          <Search />
+        </SearchProvider>
+      </MemoryRouter>
+    );
     expect(
       screen.getByPlaceholderText(TEXTS.search.placeholder)
     ).toBeInTheDocument();
@@ -18,12 +35,25 @@ describe('Search component', () => {
   });
 
   test('renders initial  value', () => {
-    render(<Search newSearch={vi.fn()} searchQuery="test" />);
+    vi.mocked(useLocalStorage).mockReturnValue(['test', vi.fn()]);
+    render(
+      <MemoryRouter>
+        <SearchProvider initialSearchQuery="test">
+          <Search />
+        </SearchProvider>
+      </MemoryRouter>
+    );
     expect(screen.getByDisplayValue('test')).toBeInTheDocument();
   });
 
   test('updates input value', () => {
-    render(<Search newSearch={vi.fn()} searchQuery="" />);
+    render(
+      <MemoryRouter>
+        <SearchProvider>
+          <Search />
+        </SearchProvider>
+      </MemoryRouter>
+    );
     const input = screen.getByRole('textbox');
     fireEvent.change(input, {
       target: {
@@ -33,21 +63,25 @@ describe('Search component', () => {
     expect(input).toHaveValue('test');
   });
 
-  test('calls newSearch when button clicked', () => {
-    const mockNewSearch = vi.fn();
-    render(<Search newSearch={mockNewSearch} searchQuery="" />);
+  test('saves search query to localStorage when button clicked', async () => {
+    const setState = vi.fn();
+    vi.mocked(useLocalStorage).mockReturnValue(['', setState]);
+    render(
+      <MemoryRouter>
+        <SearchProvider>
+          <Search />
+        </SearchProvider>
+      </MemoryRouter>
+    );
     const input = screen.getByRole('textbox');
-    fireEvent.change(input, {
-      target: {
-        value: 'test',
-      },
-    });
-    fireEvent.click(
+    const user = userEvent.setup();
+    await user.type(input, 'test');
+
+    await user.click(
       screen.getByRole('button', {
         name: TEXTS.search.button,
       })
     );
-    expect(mockNewSearch).toHaveBeenCalledTimes(1);
-    expect(mockNewSearch).toHaveBeenCalledWith('test');
+    expect(setState).toHaveBeenCalledWith('test');
   });
 });

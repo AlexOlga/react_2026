@@ -10,13 +10,16 @@ type SearchContextType = {
 export const SearchContext = createContext<SearchContextType | undefined>(
   undefined
 );
-type props = { children: ReactNode };
+type props = { children: ReactNode; initialSearchQuery?: string };
 
-export const SearchProvider = ({ children }: props) => {
-  /*const [searchQuery, setSearchQuery] = useState<string>(() => {
-    return loadFromLocalStorage(LOCAL_QUERY) || '';
-  });*/
-  const [searchQuery, setSearchQuery] = useLocalStorage(LOCAL_QUERY, '');
+export const SearchProvider = ({
+  children,
+  initialSearchQuery = '',
+}: props) => {
+  const [searchQuery, setSearchQuery] = useLocalStorage(
+    LOCAL_QUERY,
+    initialSearchQuery
+  );
   return (
     <SearchContext.Provider value={{ searchQuery, setSearchQuery }}>
       {children}

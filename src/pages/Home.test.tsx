@@ -1,130 +1,115 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { describe, test, expect, beforeEach } from 'vitest';
 import { vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
-import App from '../App';
 import getPokemons from '../utils/getPokemons';
 import getPokemonByName from '../utils/getPokemonByName';
-import loadFromLocalStorage from '../utils/loadFromLocalStorage';
-import saveFromLocalStorage from '../utils/saveFromLocalStorage';
+import useLocalStorage from '../hooks/useLocalStorage';
+import Home from './Home';
+import { SearchProvider } from '../context/SearchContext';
+import { MemoryRouter } from 'react-router';
+import { mockPokemon, mockPokemonData } from '../__mocks__/mocks';
+import { TEXTS } from '../shared/text';
+import ErrorBoundary from '../components/errorBoundary';
 
-vi.mock('./utils/getPokemons');
-vi.mock('./utils/getPokemonByName');
-vi.mock('./utils/loadFromLocalStorage');
-vi.mock('./utils/saveFromLocalStorage');
+vi.mock('../utils/getPokemons');
+vi.mock('../utils/getPokemonByName');
+vi.mock('../hooks/useLocalStorage', () => {
+  return {
+    default: vi.fn(),
+  };
+});
 
 const mockedGetPokemons = vi.mocked(getPokemons);
 const mockedGetPokemonByName = vi.mocked(getPokemonByName);
-const mockedLoadFromLocalStorage = vi.mocked(loadFromLocalStorage);
-const mockedSaveFromLocalStorage = vi.mocked(saveFromLocalStorage);
 
-vi.mock('./components/cardList', async () => {
-  return await import('../__mocks__/cardList');
-});
-vi.mock('./components/search', async () => {
-  return await import('../__mocks__/search');
-});
-vi.mock('./components/loading', async () => {
-  return await import('../__mocks__/loading');
-});
-vi.mock('./components/errorAlert', async () => {
-  return await import('../__mocks__/errorAlert');
-});
-
-describe('App', () => {
+describe('Home', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
   describe('Behavior-Focused Testing', () => {
     test('renders pokemon list after successful API request', async () => {
-      mockedLoadFromLocalStorage.mockReturnValue('');
-      mockedGetPokemons.mockResolvedValue([
-        { name: 'pikachu' },
-        { name: 'bulbasaur' },
-      ] as never);
+      vi.mocked(useLocalStorage).mockReturnValue(['', vi.fn()]);
+      mockedGetPokemons.mockResolvedValue(mockPokemonData);
 
-      render(<App />);
+      render(
+        <MemoryRouter>
+          <SearchProvider>
+            <Home />
+          </SearchProvider>
+        </MemoryRouter>
+      );
 
-      expect(screen.getByText('Loading...')).toBeInTheDocument();
       expect(await screen.findByText('pikachu')).toBeInTheDocument();
-      expect(screen.getByText('bulbasaur')).toBeInTheDocument();
-      expect(screen.getByTestId('card-list')).toBeInTheDocument();
+      expect(screen.getByText('clefairy')).toBeInTheDocument();
     });
 
     test('renders error message when API request fails', async () => {
-      mockedLoadFromLocalStorage.mockReturnValue('');
       mockedGetPokemons.mockRejectedValue(new Error('API Error'));
-
-      render(<App />);
+      render(
+        <MemoryRouter>
+          <SearchProvider>
+            <Home />
+          </SearchProvider>
+        </MemoryRouter>
+      );
 
       expect(await screen.findByText('API Error')).toBeInTheDocument();
     });
+    test('loads and shows pokemon based on stored search query', async () => {
+      mockedGetPokemonByName.mockResolvedValue([mockPokemon] as never);
+      vi.mocked(useLocalStorage).mockReturnValue(['pikachu', vi.fn()]);
 
-    test('searches pokemon by user input', async () => {
-      const user = userEvent.setup();
+      render(
+        <MemoryRouter>
+          <SearchProvider>
+            <Home />
+          </SearchProvider>
+        </MemoryRouter>
+      );
+      expect(mockedGetPokemonByName).toHaveBeenCalledWith('pikachu');
 
-      mockedLoadFromLocalStorage.mockReturnValue('');
-      mockedGetPokemons.mockResolvedValue([]);
-
-      mockedGetPokemonByName.mockResolvedValue([
-        { name: 'charizard' },
-      ] as never);
-
-      render(<App />);
-
-      const input = screen.getByLabelText('search-input');
-
-      await user.type(input, 'charizard');
-
-      await waitFor(() => {
-        expect(mockedGetPokemonByName).toHaveBeenCalled();
-      });
-
-      expect(await screen.findByText('charizard')).toBeInTheDocument();
+      expect(await screen.findByText('pikachu')).toBeInTheDocument();
     });
   });
   describe('API mocking tests', () => {
     test('uses mocked getPokemons API call', async () => {
-      mockedLoadFromLocalStorage.mockReturnValue('');
-      mockedGetPokemons.mockResolvedValue([{ name: 'squirtle' }] as never);
-      render(<App />);
-      await screen.findByText('squirtle');
-      expect(mockedGetPokemons).toHaveBeenCalledTimes(1);
-    });
+      vi.mocked(useLocalStorage).mockReturnValue(['', vi.fn()]);
+      mockedGetPokemons.mockResolvedValue(mockPokemonData);
 
-    test('API error response correctly', async () => {
-      mockedLoadFromLocalStorage.mockReturnValue('');
-      mockedGetPokemons.mockRejectedValue(new Error('Network failed'));
-      render(<App />);
-      expect(await screen.findByText('Network failed')).toBeInTheDocument();
+      render(
+        <MemoryRouter>
+          <SearchProvider>
+            <Home />
+          </SearchProvider>
+        </MemoryRouter>
+      );
+
+      expect(await screen.findByText('pikachu')).toBeInTheDocument();
+      expect(mockedGetPokemons).toHaveBeenCalledTimes(1);
     });
   });
 
-  describe('localStorage functionality tests', () => {
-    test('reads value from localStorage on mount', async () => {
-      mockedLoadFromLocalStorage.mockReturnValue('pikachu');
-      mockedGetPokemonByName.mockResolvedValue([{ name: 'pikachu' }] as never);
-
-      render(<App />);
-
-      expect(mockedLoadFromLocalStorage).toHaveBeenCalled();
-      expect(await screen.findByText('pikachu')).toBeInTheDocument();
-    });
-
-    test('writes value to localStorage after search', async () => {
+  describe('buggy button', () => {
+    test('renders ErrorBoundary after buggy action in Home', async () => {
+      vi.mocked(useLocalStorage).mockReturnValue(['', vi.fn()]);
+      mockedGetPokemons.mockResolvedValue(mockPokemonData);
       const user = userEvent.setup();
+      render(
+        <ErrorBoundary>
+          <MemoryRouter>
+            <SearchProvider>
+              <Home />
+            </SearchProvider>
+          </MemoryRouter>
+        </ErrorBoundary>
+      );
 
-      mockedLoadFromLocalStorage.mockReturnValue('');
-      mockedGetPokemons.mockResolvedValue([] as never);
-
-      mockedGetPokemonByName.mockResolvedValue([{ name: 'pikachu' }] as never);
-
-      render(<App />);
-      const input = screen.getByLabelText('search-input');
-      await user.type(input, 'pikachu');
-      await waitFor(() => {
-        expect(mockedSaveFromLocalStorage).toHaveBeenCalled();
-      });
+      expect(await screen.findByText('pikachu')).toBeInTheDocument();
+      await user.click(
+        screen.getByRole('button', { name: TEXTS.buggy.button })
+      );
+      expect(screen.queryByText('pikachu')).not.toBeInTheDocument();
     });
   });
 });

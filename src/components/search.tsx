@@ -13,7 +13,6 @@ const Search = () => {
     const trimmed = event.target?.value;
     setQuery(trimmed);
   };
-
   const handleSearch = () => {
     const trimmed = query.trim();
     if (trimmed !== searchQuery) {

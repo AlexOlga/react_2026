@@ -11,9 +11,9 @@ describe('Card component', () => {
     expect(screen.getByText('pikachu')).toBeInTheDocument();
   });
 
-  test('renders pokemon type', () => {
+  test('renders pokemon base experience', () => {
     render(<Card {...mockPokemon} />);
-    expect(screen.getByText('electric')).toBeInTheDocument();
+    expect(screen.getByText('134')).toBeInTheDocument();
   });
 
   test('renders pokemon image', () => {
