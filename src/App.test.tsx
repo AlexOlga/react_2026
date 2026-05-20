@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, test, expect, vi } from 'vitest';
 import { MemoryRouter } from 'react-router';
-import { aboutPage, NotFoundPage } from './shared/text';
+import { aboutPage, cardDetailsText, NotFoundPage } from './shared/text';
 import App from './App';
 import getPokemons from './utils/getPokemons';
 import useLocalStorage from './hooks/useLocalStorage';
@@ -10,7 +10,6 @@ import {
   mockPokemonData,
   mockPokemonList,
 } from './__mocks__/mocks';
-import { SearchProvider } from './context/SearchContext';
 import getPokemonById from './utils/getPokemonById';
 import userEvent from '@testing-library/user-event';
 
@@ -31,22 +30,16 @@ describe('AppRoutes', () => {
     mockedGetPokemons.mockResolvedValue(mockPokemonData);
     render(
       <MemoryRouter initialEntries={['/']}>
-        <SearchProvider>
-          <App />
-        </SearchProvider>
+        <App />
       </MemoryRouter>
     );
-
     expect(await screen.findByText('pikachu')).toBeInTheDocument();
   });
 
   test('renders About page on "/about" route', () => {
     render(
       <MemoryRouter initialEntries={['/about']}>
-        <SearchProvider>
-          {' '}
-          <App />
-        </SearchProvider>
+        <App />
       </MemoryRouter>
     );
 
@@ -56,10 +49,7 @@ describe('AppRoutes', () => {
   test('renders NotFound page on unknown route', () => {
     render(
       <MemoryRouter initialEntries={['/unknown']}>
-        <SearchProvider>
-          {' '}
-          <App />
-        </SearchProvider>
+        <App />
       </MemoryRouter>
     );
 
@@ -72,16 +62,14 @@ describe('AppRoutes', () => {
     mockedGetPokemonById.mockResolvedValue(mockPokemon);
     render(
       <MemoryRouter initialEntries={['/']}>
-        <SearchProvider>
-          <App />
-        </SearchProvider>
+        <App />
       </MemoryRouter>
     );
     const cart1 = await screen.findByText('pikachu');
     expect(cart1).toBeInTheDocument();
     const user = userEvent.setup();
     await user.click(cart1);
-    expect(await screen.findByText('Height:')).toBeInTheDocument();
+    expect(await screen.findByText(cardDetailsText.height)).toBeInTheDocument();
     expect(await screen.findByText('electric')).toBeInTheDocument();
   });
   test('change CardDetails on nested details', async () => {
@@ -95,9 +83,7 @@ describe('AppRoutes', () => {
     });
     render(
       <MemoryRouter initialEntries={['/']}>
-        <SearchProvider>
-          <App />
-        </SearchProvider>
+        <App />
       </MemoryRouter>
     );
     const user = userEvent.setup();

@@ -1,10 +1,13 @@
 import AppRoutes from './routes/routes';
-import Header from './components/header';
+import Header from './components/Header';
+import { SearchProvider } from './context/SearchContext.tsx';
 const App = () => {
   return (
     <>
-      <Header />
-      <AppRoutes />
+      <SearchProvider>
+        <Header />
+        <AppRoutes />
+      </SearchProvider>
     </>
   );
 };

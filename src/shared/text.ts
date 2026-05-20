@@ -34,3 +34,12 @@ export const navTexts = {
   home: 'Home',
   about: 'About',
 };
+export const cardDetailsText = {
+  general: 'General',
+  types: 'Types',
+  abilities: 'Abilities',
+  height: 'Height',
+  weight: 'Weight',
+  baseExperience: 'Base experience',
+  close: 'X',
+};

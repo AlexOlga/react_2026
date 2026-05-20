@@ -6,19 +6,16 @@ type PokemonUrl = {
   name: string;
   url: string;
 };
-type PokemonResponse = {
+type ApiResponse<T> = {
   count: number;
-  results: PokemonUrl[];
+  results: T[];
 };
-type PokemonData = {
-  count: number;
-  results: Pokemon[];
-};
+
 async function getPokemonsUrl(
   limit: number,
   offset: number
-): Promise<PokemonResponse> {
-  const data: PokemonResponse = await baseFetch(
+): Promise<ApiResponse<PokemonUrl>> {
+  const data: ApiResponse<PokemonUrl> = await baseFetch(
     `${URL_API}${API_QUERY.offset}${offset}&${API_QUERY.limit}${limit}`
   );
   return data;
@@ -35,7 +32,10 @@ async function getPokemonsData(pokemons: PokemonUrl[]): Promise<Pokemon[]> {
     .map((r) => r.value);
 }
 
-async function getPokemons(limit: number, page: number): Promise<PokemonData> {
+async function getPokemons(
+  limit: number,
+  page: number
+): Promise<ApiResponse<Pokemon>> {
   const offset = limit * (page - 1);
   const res = await getPokemonsUrl(limit, offset);
   return {

@@ -1,11 +1,5 @@
+import { errorMessagesMap } from '../constants/global';
 import { errorMessages } from '../shared/text';
-const errorMessagesMap: Record<number, string> = {
-  400: 'Invalid request. Please check your input.',
-  401: 'You need to log in to continue.',
-  403: 'You do not have permission to perform this action.',
-  404: 'Not found.',
-  500: 'Server error. Please try again later.',
-};
 
 async function baseFetch<T>(url: string): Promise<T> {
   try {
