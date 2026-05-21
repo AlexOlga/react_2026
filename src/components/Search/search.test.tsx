@@ -3,7 +3,7 @@ import { describe, test, expect } from 'vitest';
 import Search from './Search';
 import { TEXTS } from '../../shared/text';
 import { MemoryRouter } from 'react-router';
-import { SearchProvider } from '../../context/SearchContext';
+import { SearchProvider } from '../../context/SearchContext/SearchContext';
 import { vi } from 'vitest';
 import useLocalStorage from '../../hooks/useLocalStorage';
 import userEvent from '@testing-library/user-event';

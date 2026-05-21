@@ -10,7 +10,7 @@ import Loading from '../../components/Loading';
 import ErrorAlert from '../../components/ErrorAlert';
 import type { Pokemon } from '../../types/pokemon';
 import Pagination from '../../components/Pagination';
-import { useSearch } from '../../context/useSearch';
+import { useSearch } from '../../context/SearchContext/useSearch';
 
 const Home = () => {
   const [searchParams] = useSearchParams();

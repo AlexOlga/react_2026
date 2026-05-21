@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { describe, test, expect } from 'vitest';
 import { MemoryRouter } from 'react-router';
 import Header from './Header';
-import { SearchProvider } from '../../context/SearchContext';
+import { SearchProvider } from '../../context/SearchContext/SearchContext';
 
 describe('Header', () => {
   test('renders navigation links', () => {

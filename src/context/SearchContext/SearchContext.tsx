@@ -1,6 +1,6 @@
 import { createContext, type ReactNode } from 'react';
-import { LOCAL_QUERY } from '../constants/global';
-import useLocalStorage from '../hooks/useLocalStorage';
+import { LOCAL_QUERY } from '../../constants/global';
+import useLocalStorage from '../../hooks/useLocalStorage';
 type SearchContextType = {
   searchQuery: string;
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;

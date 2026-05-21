@@ -6,7 +6,7 @@ import getPokemons from '../../utils/getPokemons';
 import getPokemonByName from '../../utils/getPokemonByName';
 import useLocalStorage from '../../hooks/useLocalStorage';
 import Home from './Home';
-import { SearchProvider } from '../../context/SearchContext';
+import { SearchProvider } from '../../context/SearchContext/SearchContext';
 import { MemoryRouter } from 'react-router';
 import { mockPokemon, mockPokemonData } from '../../__mocks__/mocks';
 import { TEXTS } from '../../shared/text';

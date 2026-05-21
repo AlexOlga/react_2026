@@ -2,7 +2,7 @@ import * as React from 'react';
 import { TEXTS } from '../../shared/text';
 import { buttonStyles } from '../../shared/styles/button';
 import { inputStyles } from '../../shared/styles/input';
-import { useSearch } from '../../context/useSearch';
+import { useSearch } from '../../context/SearchContext/useSearch';
 import { useNavigate } from 'react-router';
 
 const Search = () => {
