@@ -18,7 +18,6 @@ const Card = (data: Pokemon) => {
   return (
     <div className={cardStyles.card}>
       <div>
-        {' '}
         <button onClick={handelHeart} type="button">
           <HeartIcon filled={isFavorite} />
         </button>

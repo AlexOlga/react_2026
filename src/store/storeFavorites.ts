@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-interface IFavoritesStore {
+export interface IFavoritesStore {
   favorites: number[];
   toggleFavorite: (id: number) => void;
   isFavorite: (id: number) => boolean;
