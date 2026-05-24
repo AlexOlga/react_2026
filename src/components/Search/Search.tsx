@@ -1,13 +1,13 @@
-import * as React from 'react';
 import { TEXTS } from '../../shared/text';
 import { buttonStyles } from '../../shared/styles/button';
 import { inputStyles } from '../../shared/styles/input';
 import { useSearch } from '../../context/SearchContext/useSearch';
 import { useNavigate } from 'react-router';
+import { useState } from 'react';
 
 const Search = () => {
   const { searchQuery, setSearchQuery } = useSearch();
-  const [query, setQuery] = React.useState(searchQuery);
+  const [query, setQuery] = useState(searchQuery);
   const navigate = useNavigate();
   const changeQuery = (event: React.ChangeEvent<HTMLInputElement>) => {
     const trimmed = event.target?.value;

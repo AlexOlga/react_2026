@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Outlet, useNavigate, useSearchParams } from 'react-router';
 import BuggyButton from '../../components/BuggyButton/BuggyButton';
 import getPokemonByName from '../../utils/getPokemonByName';
@@ -11,17 +11,18 @@ import ErrorAlert from '../../components/ErrorAlert';
 import type { Pokemon } from '../../types/pokemon';
 import Pagination from '../../components/Pagination';
 import { useSearch } from '../../context/SearchContext/useSearch';
+import Flyout from '../../components/Flyout';
 
 const Home = () => {
   const [searchParams] = useSearchParams();
   const currentPage = Number(searchParams.get('page')) || 1;
   const navigate = useNavigate();
-  const [pokemons, setPokemons] = React.useState<Pokemon[]>([]);
+  const [pokemons, setPokemons] = useState<Pokemon[]>([]);
   const { searchQuery } = useSearch();
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [isError, setIsError] = React.useState(false);
-  const [errorMessage, setErrorMessage] = React.useState('');
-  const [totalPages, setTotalPages] = React.useState<number>(1);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [totalPages, setTotalPages] = useState<number>(1);
 
   const fetchPokemonList = async () => {
     const data = await getPokemons(PAGE_LIMIT, currentPage);
@@ -96,6 +97,7 @@ const Home = () => {
       <div className="flex justify-center p-4">
         <BuggyButton />
       </div>
+      <Flyout />
     </>
   );
 };

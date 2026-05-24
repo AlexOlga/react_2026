@@ -3,13 +3,16 @@ import { describe, test, expect } from 'vitest';
 import { MemoryRouter } from 'react-router';
 import Header from './Header';
 import { SearchProvider } from '../../context/SearchContext/SearchContext';
+import ThemeProvider from '../../context/ThemeContext/ThemeProvider';
 
 describe('Header', () => {
   test('renders navigation links', () => {
     render(
       <MemoryRouter>
         <SearchProvider>
-          <Header />
+          <ThemeProvider>
+            <Header />
+          </ThemeProvider>
         </SearchProvider>
       </MemoryRouter>
     );
@@ -22,7 +25,9 @@ describe('Header', () => {
     render(
       <MemoryRouter>
         <SearchProvider>
-          <Header />
+          <ThemeProvider>
+            <Header />
+          </ThemeProvider>
         </SearchProvider>
       </MemoryRouter>
     );

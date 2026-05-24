@@ -1,9 +1,9 @@
-import * as React from 'react';
 import { TEXTS } from '../../shared/text';
 import { buttonStyles } from '../../shared/styles/button';
+import { useState } from 'react';
 
 const BuggyButton = () => {
-  const [crash, setCrash] = React.useState<boolean>(false);
+  const [crash, setCrash] = useState<boolean>(false);
   if (crash) {
     throw new Error(TEXTS.buggy.error);
   }

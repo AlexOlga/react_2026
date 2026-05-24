@@ -1,18 +1,21 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Theme, type ThemeProviderProps } from './themeContext.types';
+import {
+  DARK,
+  LIGHT,
+  type Theme,
+  type ThemeProviderProps,
+} from './themeContext.types';
 import { ThemeContext } from './ThemeContext';
 
 const ThemeProvider = ({ children }: ThemeProviderProps) => {
-  const [theme, setTheme] = useState<Theme>(Theme.LIGHT);
+  const [theme, setTheme] = useState<Theme>(LIGHT);
 
   useEffect(() => {
-    document.documentElement.classList.toggle('dark', theme === Theme.DARK);
+    document.documentElement.classList.toggle('dark', theme === DARK);
   }, [theme]);
 
   const toggleTheme = (): void => {
-    setTheme((prevTheme) =>
-      prevTheme === Theme.LIGHT ? Theme.DARK : Theme.LIGHT
-    );
+    setTheme((prevTheme) => (prevTheme === LIGHT ? DARK : LIGHT));
   };
   const value = useMemo(() => ({ theme, toggleTheme }), [theme]);
   return (
