@@ -48,8 +48,8 @@ const CardDetails = () => {
     );
   }
   if (isError || !pokemon) return <ErrorAlert message={errorMessage} />;
-  const imgURL = pokemon.sprites?.back_default
-    ? pokemon.sprites.back_default
+  const imgURL = pokemon.sprites?.front_default
+    ? pokemon.sprites.front_default
     : placeholderURL;
   return (
     <aside className={cardDetailsStyles.aside}>

@@ -1,8 +1,7 @@
 export type Pokemon = {
   id: number;
   name: string;
-  url: string;
-  sprites?: { back_default?: string };
+  sprites?: { front_default?: string };
   types: PokemonType[];
   weight: number;
   height: number;

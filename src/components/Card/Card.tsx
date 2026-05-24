@@ -5,8 +5,8 @@ import { HeartIcon } from './HeartIcon';
 import { useFavorites } from '../../store/storeFavorites';
 
 const Card = (data: Pokemon) => {
-  const imgURL = data.sprites?.back_default
-    ? data.sprites.back_default
+  const imgURL = data.sprites?.front_default
+    ? data.sprites.front_default
     : placeholderURL;
   const toggleFavorite = useFavorites((state) => state.toggleFavorite);
   const isFavorite = useFavorites((state) => state.isFavorite(data.id));

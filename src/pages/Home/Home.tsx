@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Outlet, useNavigate, useSearchParams } from 'react-router';
 import BuggyButton from '../../components/BuggyButton/BuggyButton';
 import getPokemonByName from '../../utils/getPokemonByName';
@@ -24,36 +24,39 @@ const Home = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [totalPages, setTotalPages] = useState<number>(1);
 
-  const fetchPokemonList = async () => {
+  const fetchPokemonList = useCallback(async () => {
     const data = await getPokemons(PAGE_LIMIT, currentPage);
     setPokemons(data.results);
     setTotalPages(Math.ceil(data.count / PAGE_LIMIT));
-  };
-  const fetchPokemonSearch = async (query: string) => {
+  }, [currentPage]);
+  const fetchPokemonSearch = useCallback(async (query: string) => {
     const data = await getPokemonByName(query);
     setPokemons(data);
     setTotalPages(1);
-  };
+  }, []);
 
-  const fetchPokemonsByQuery = async (query: string) => {
-    try {
-      setIsLoading(true);
-      setIsError(false);
-      setErrorMessage('');
-      if (query.trim() === '') {
-        await fetchPokemonList();
-      } else {
-        await fetchPokemonSearch(query);
+  const fetchPokemonsByQuery = useCallback(
+    async (query: string) => {
+      try {
+        setIsLoading(true);
+        setIsError(false);
+        setErrorMessage('');
+        if (query.trim() === '') {
+          await fetchPokemonList();
+        } else {
+          await fetchPokemonSearch(query);
+        }
+      } catch (error: unknown) {
+        setIsError(true);
+        setErrorMessage(
+          error instanceof Error ? error.message : errorMessages.other
+        );
+      } finally {
+        setIsLoading(false);
       }
-    } catch (error: unknown) {
-      setIsError(true);
-      setErrorMessage(
-        error instanceof Error ? error.message : errorMessages.other
-      );
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    },
+    [fetchPokemonList, fetchPokemonSearch]
+  );
 
   const onPageChange = async (page: number) => {
     navigate(`/?page=${page}`);

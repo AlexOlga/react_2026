@@ -3,7 +3,7 @@ import type { Pokemon } from '../types/pokemon';
 import baseFetch from './baseFeatch';
 
 type PokemonUrl = {
-  name: string;
+  name?: string;
   url: string;
 };
 type ApiResponse<T> = {
@@ -20,7 +20,9 @@ async function getPokemonsUrl(
   );
   return data;
 }
-async function getPokemonsData(pokemons: PokemonUrl[]): Promise<Pokemon[]> {
+export async function getPokemonsData(
+  pokemons: PokemonUrl[]
+): Promise<Pokemon[]> {
   const results = await Promise.allSettled(
     pokemons.map((p) => baseFetch<Pokemon>(p.url))
   );
