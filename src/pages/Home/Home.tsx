@@ -10,7 +10,7 @@ import { useSearch } from '../../context/SearchContext/useSearch';
 import Flyout from '../../components/Flyout';
 import { usePokemons } from '../../hooks/usePokemons';
 import { useSearchPokemons } from '../../hooks/useSearchPokemon';
-import RefreshButton from '../../components/RefreshButton/RefreshButton';
+import RefreshButton from '../../components/RefreshButton';
 
 const Home = () => {
   const [searchParams] = useSearchParams();
