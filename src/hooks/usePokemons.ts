@@ -6,5 +6,6 @@ export function usePokemons(page: number) {
   return useQuery({
     queryKey: ['pokemons', page],
     queryFn: () => getPokemons(PAGE_LIMIT, page),
+    enabled: !!page,
   });
 }

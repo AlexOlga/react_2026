@@ -1,53 +1,33 @@
 import { useNavigate, useParams, useSearchParams } from 'react-router';
-import type { Pokemon } from '../../types/pokemon';
-import { useEffect, useState } from 'react';
-import getPokemonById from '../../utils/getPokemonById';
 import Loading from '../Loading/Loading';
 import { placeholderURL } from '../../constants/global';
-import { cardDetailsText, errorMessages } from '../../shared/text';
+import { cardDetailsText } from '../../shared/text';
 import ErrorAlert from '../ErrorAlert/ErrorAlert';
 import { buttonStyles } from '../../shared/styles/button';
 import { cardDetailsStyles } from './cardDetails.styles';
+import { usePokemonDetails } from '../../hooks/usePokemonDetails';
 
 const CardDetails = () => {
   const [searchParams] = useSearchParams();
-  const [pokemon, setPokemon] = useState<Pokemon | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
   const { cardId } = useParams();
-  const page = searchParams.get('page');
   const navigate = useNavigate();
-  useEffect(() => {
-    if (!cardId) return;
-    const loadPokemon = async () => {
-      try {
-        setIsLoading(true);
-        const data = await getPokemonById(cardId);
-        setPokemon(data);
-      } catch (error) {
-        setIsError(true);
-        setErrorMessage(
-          error instanceof Error ? error.message : errorMessages.other
-        );
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    loadPokemon();
-  }, [cardId]);
+  const pokemonDetails = usePokemonDetails(cardId);
+  if (!pokemonDetails.data) return;
+  const pokemon = pokemonDetails.data;
+  const page = searchParams.get('page');
 
   const onClose = () => {
     navigate(`/?page=${page}`);
   };
-  if (isLoading) {
+  if (pokemonDetails.isLoading) {
     return (
       <div className="flex justify-center p-8">
         <Loading />
       </div>
     );
   }
-  if (isError || !pokemon) return <ErrorAlert message={errorMessage} />;
+  if (pokemonDetails.error)
+    return <ErrorAlert message={pokemonDetails.error.message} />;
   const imgURL = pokemon.sprites?.front_default
     ? pokemon.sprites.front_default
     : placeholderURL;

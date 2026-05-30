@@ -5,5 +5,6 @@ export function useSearchPokemons(name: string) {
   return useQuery({
     queryKey: [name],
     queryFn: () => getPokemonByName(name),
+    enabled: !!name,
   });
 }
