@@ -1,18 +1,16 @@
 import { useEffect } from 'react';
 import { Outlet, useNavigate, useSearchParams } from 'react-router';
 import BuggyButton from '../../components/BuggyButton/BuggyButton';
-
 import { PAGE_LIMIT } from '../../constants/global';
-
 import CardList from '../../components/CardList';
 import Loading from '../../components/Loading';
 import ErrorAlert from '../../components/ErrorAlert';
-
 import Pagination from '../../components/Pagination';
 import { useSearch } from '../../context/SearchContext/useSearch';
 import Flyout from '../../components/Flyout';
 import { usePokemons } from '../../hooks/usePokemons';
 import { useSearchPokemons } from '../../hooks/useSearchPokemon';
+import RefreshButton from '../../components/RefreshButton/RefreshButton';
 
 const Home = () => {
   const [searchParams] = useSearchParams();
@@ -65,8 +63,9 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="flex justify-center p-4">
+      <div className="flex justify-center p-4 gap-4">
         <BuggyButton />
+        <RefreshButton />
       </div>
       <Flyout />
     </>
