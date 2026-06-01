@@ -8,7 +8,6 @@ import type { UseQueryResult } from '@tanstack/react-query';
 import type { Pokemon } from '../../types/pokemon';
 const { useParams, useSearchParams, useNavigate } =
   await import('react-router');
-vi.mock('../../utils/getPokemonById');
 vi.mock('react-router', async () => {
   const actual = await vi.importActual('react-router');
   return {
@@ -57,5 +56,15 @@ describe('CardDetails component', () => {
     const closeBtn = await screen.findByRole('button');
     await user.click(closeBtn);
     expect(navigate).toHaveBeenCalledWith('/?page=1');
+  });
+  test('render loading', async () => {
+    mockedUsePokemonDetails.mockReturnValue({
+      data: mockPokemon,
+      isLoading: true,
+      error: null,
+    } as unknown as UseQueryResult<Pokemon, Error>);
+
+    render(<CardDetails />);
+    expect(screen.getByRole('status', { name: 'Loading' })).toBeInTheDocument();
   });
 });

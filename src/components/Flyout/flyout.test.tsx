@@ -1,7 +1,12 @@
 import { describe, expect, test, vi } from 'vitest';
 import Flyout from './Flyout';
 import { fireEvent, render, screen } from '@testing-library/react';
-
+import { useFavorites } from '../../store/storeFavorites';
+import userEvent from '@testing-library/user-event';
+import { downloadData } from '../../utils/downloadData';
+import { getPokemonsData } from '../../utils/getPokemons';
+import { createCSVContext } from '../../utils/createCSVContext';
+import { mockPokemon } from '../../__mocks__/mocks';
 vi.mock('../../utils/getPokemons', () => ({
   getPokemonsData: vi.fn(),
 }));
@@ -14,7 +19,9 @@ vi.mock('../../utils/downloadData', () => ({
   downloadData: vi.fn(),
 }));
 
-import { useFavorites } from '../../store/storeFavorites';
+const mockedDownloadData = vi.mocked(downloadData);
+const mockedGetPokemonsData = vi.mocked(getPokemonsData);
+const mockedCreateCSVContext = vi.mocked(createCSVContext);
 
 describe('Flyout', () => {
   test('does not render when no favorites', () => {
@@ -48,5 +55,32 @@ describe('Flyout', () => {
     render(<Flyout />);
     fireEvent.click(screen.getByRole('button', { name: /unselect all/i }));
     expect(removeAllFavorite).toHaveBeenCalledTimes(1);
+  });
+
+  test('downloads CSV file with favorites', async () => {
+    const user = userEvent.setup();
+    const removeAllFavorite = vi.fn();
+
+    useFavorites.setState({
+      totalFavorite: () => 3,
+      removeAllFavorite,
+      favorites: [1, 2, 3],
+    });
+
+    mockedGetPokemonsData.mockResolvedValue([mockPokemon]);
+    mockedCreateCSVContext.mockReturnValue('csv-data');
+
+    render(<Flyout />);
+
+    const button = screen.getByRole('button', { name: /download/i });
+
+    await user.click(button);
+
+    expect(mockedGetPokemonsData).toHaveBeenCalled();
+    expect(mockedCreateCSVContext).toHaveBeenCalled();
+    expect(mockedDownloadData).toHaveBeenCalledWith(
+      expect.any(Blob),
+      '3_items.csv'
+    );
   });
 });

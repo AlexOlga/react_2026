@@ -1,14 +1,11 @@
 import { API_QUERY, URL_API } from '../constants/global';
+import type { ApiResponse } from '../types/api';
 import type { Pokemon } from '../types/pokemon';
 import baseFetch from './baseFeatch';
 
 type PokemonUrl = {
   name?: string;
   url: string;
-};
-type ApiResponse<T> = {
-  count: number;
-  results: T[];
 };
 
 async function getPokemonsUrl(

@@ -9,7 +9,7 @@ import Pagination from '../../components/Pagination';
 import { useSearch } from '../../context/SearchContext/useSearch';
 import Flyout from '../../components/Flyout';
 import { usePokemons } from '../../hooks/usePokemons';
-import { useSearchPokemons } from '../../hooks/useSearchPokemon';
+import { useSearchPokemon } from '../../hooks/useSearchPokemon';
 import RefreshButton from '../../components/RefreshButton';
 
 const Home = () => {
@@ -18,7 +18,7 @@ const Home = () => {
   const navigate = useNavigate();
   const { searchQuery } = useSearch();
   const pokemonsList = usePokemons(currentPage);
-  const pokemonSearchQuery = useSearchPokemons(searchQuery);
+  const pokemonSearchQuery = useSearchPokemon(searchQuery);
   const pokemons =
     (searchQuery === ''
       ? pokemonsList.data?.results

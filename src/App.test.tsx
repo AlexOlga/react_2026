@@ -1,33 +1,61 @@
 import { render, screen } from '@testing-library/react';
-import { describe, test, expect, vi } from 'vitest';
+import { describe, test, expect, vi, beforeEach } from 'vitest';
 import { MemoryRouter } from 'react-router';
 import { aboutPage, cardDetailsText, NotFoundPage } from './shared/text';
 import App from './App';
-import getPokemons from './utils/getPokemons';
 import useLocalStorage from './hooks/useLocalStorage';
 import {
   mockPokemon,
   mockPokemonData,
   mockPokemonList,
 } from './__mocks__/mocks';
-import getPokemonById from './utils/getPokemonById';
 import userEvent from '@testing-library/user-event';
+import { usePokemons } from './hooks/usePokemons';
+import { useSearchPokemon } from './hooks/useSearchPokemon';
 
-vi.mock('./utils/getPokemons');
-vi.mock('./utils/getPokemonById');
+import type { Pokemon } from './types/pokemon';
+import type { ApiResponse } from './types/api';
+import { usePokemonDetails } from './hooks/usePokemonDetails';
+import type { UseQueryResult } from '@tanstack/react-query';
+
 vi.mock('./hooks/useLocalStorage', () => {
   return {
     default: vi.fn(),
   };
 });
 
-const mockedGetPokemons = vi.mocked(getPokemons);
-const mockedGetPokemonById = vi.mocked(getPokemonById);
+vi.mock('./hooks/usePokemons', () => ({
+  usePokemons: vi.fn(),
+}));
+
+vi.mock('./hooks/useSearchPokemon', () => ({
+  useSearchPokemon: vi.fn(),
+}));
+vi.mock('./hooks/usePokemonDetails', () => ({
+  usePokemonDetails: vi.fn(),
+}));
+const mockedUsePokemons = vi.mocked(usePokemons);
+const mockedUseSearchPokemon = vi.mocked(useSearchPokemon);
+const mockedUsePokemonDetails = vi.mocked(usePokemonDetails);
 
 describe('AppRoutes', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
   test('renders Home page on "/" route', async () => {
     vi.mocked(useLocalStorage).mockReturnValue(['', vi.fn()]);
-    mockedGetPokemons.mockResolvedValue(mockPokemonData);
+    mockedUsePokemons.mockReturnValue({
+      data: mockPokemonData,
+      isLoading: false,
+      error: null,
+    } as unknown as UseQueryResult<ApiResponse<Pokemon>, Error>);
+
+    mockedUseSearchPokemon.mockReturnValue({
+      data: [],
+      isLoading: false,
+      error: null,
+    } as unknown as UseQueryResult<Pokemon[], Error>);
+
     render(
       <MemoryRouter initialEntries={['/']}>
         <App />
@@ -58,8 +86,22 @@ describe('AppRoutes', () => {
 
   test('renders CardDetails on nested details', async () => {
     vi.mocked(useLocalStorage).mockReturnValue(['', vi.fn()]);
-    mockedGetPokemons.mockResolvedValue(mockPokemonData);
-    mockedGetPokemonById.mockResolvedValue(mockPokemon);
+    mockedUsePokemons.mockReturnValue({
+      data: mockPokemonData,
+      isLoading: false,
+      error: null,
+    } as unknown as UseQueryResult<ApiResponse<Pokemon>, Error>);
+
+    mockedUseSearchPokemon.mockReturnValue({
+      data: [],
+      isLoading: false,
+      error: null,
+    } as unknown as UseQueryResult<Pokemon[], Error>);
+    mockedUsePokemonDetails.mockReturnValue({
+      data: mockPokemon,
+      isLoading: false,
+      error: null,
+    } as unknown as UseQueryResult<Pokemon, Error>);
     render(
       <MemoryRouter initialEntries={['/']}>
         <App />
@@ -74,12 +116,36 @@ describe('AppRoutes', () => {
   });
   test('change CardDetails on nested details', async () => {
     vi.mocked(useLocalStorage).mockReturnValue(['', vi.fn()]);
-    mockedGetPokemons.mockResolvedValue(mockPokemonData);
-    mockedGetPokemonById.mockImplementation((id: string) => {
+    mockedUsePokemons.mockReturnValue({
+      data: mockPokemonData,
+      isLoading: false,
+      error: null,
+    } as unknown as UseQueryResult<ApiResponse<Pokemon>, Error>);
+
+    mockedUseSearchPokemon.mockReturnValue({
+      data: [],
+      isLoading: false,
+      error: null,
+    } as unknown as UseQueryResult<Pokemon[], Error>);
+    mockedUsePokemonDetails.mockReturnValue({
+      data: mockPokemon,
+      isLoading: false,
+      error: null,
+    } as unknown as UseQueryResult<Pokemon, Error>);
+    mockedUsePokemonDetails.mockImplementation((id) => {
       if (id === '1') {
-        return Promise.resolve(mockPokemon);
+        return {
+          data: mockPokemon,
+          isLoading: false,
+          error: null,
+        } as unknown as UseQueryResult<Pokemon, Error>;
       }
-      return Promise.resolve(mockPokemonList[1]);
+
+      return {
+        data: mockPokemonList[1],
+        isLoading: false,
+        error: null,
+      } as unknown as UseQueryResult<Pokemon, Error>;
     });
     render(
       <MemoryRouter initialEntries={['/']}>
