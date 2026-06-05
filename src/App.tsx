@@ -1,9 +1,23 @@
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import './App.css';
 import Modal from './components/Modal/Modal';
+import UncontrolledForms from './components/UncontrolledForms';
+import ReactHookForm from './components/ReactHookForm';
 
 function App() {
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [childrenModal, setChildrenModal ] = useState<null| ReactNode>(null);
+  const openUncontrolledForm = ()=>{
+    setIsOpenModal(true);
+     setChildrenModal(<UncontrolledForms/>)
+  }
+  const onClose=() => {setIsOpenModal(false)
+setChildrenModal(null);
+  }
+    const openReactHookForm = ()=>{
+    setIsOpenModal(true);
+     setChildrenModal(<ReactHookForm/>)
+  }
   return (
     <>
       <header>
@@ -12,18 +26,17 @@ function App() {
         <button
           type="button"
           className="counter"
-          onClick={() => setIsOpenModal(true)}
+          onClick={ openUncontrolledForm}
         >
-          Uncontrolled Components
+          Uncontrolled Forms
         </button>
-        <button type="button" className="counter">
+        <button type="button" className="counter" onClick={openReactHookForm}>
           React Hook Form
         </button>
       </header>
 
-      <Modal isOpen={isOpenModal} onClose={() => setIsOpenModal(false)}>
-        tut tut tutu tu tut
-      </Modal>
+      <Modal isOpen={isOpenModal}   onClose={onClose} >{childrenModal}</Modal>
+    
     </>
   );
 }
