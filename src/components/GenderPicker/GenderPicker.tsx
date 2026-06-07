@@ -1,17 +1,15 @@
-import type { ChangeEventHandler } from 'react';
-
 type GenderProps = {
   id: string;  
   error?: string;
-  onChange?: ChangeEventHandler;
+ 
 };
 
-const GenderPicker = ({id,error}:  GenderProps)=>{
+const GenderPicker = ({id,error, ...props}:  GenderProps)=>{
     return(
         <div>
   <label htmlFor="gender" className="mr-5">Gender</label>
 
-  <select id={id} name="gender"  className="border-solid rounded-xs outline-none bg-cyan-50">
+  <select id={id} name="gender"  className="border-solid rounded-xs outline-none bg-cyan-50"  {...props}>
     <option value="">Select gender</option>
     <option value="male">Male</option>
     <option value="female">Female</option>

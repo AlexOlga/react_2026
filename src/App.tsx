@@ -2,9 +2,10 @@ import { useState, type ReactNode } from 'react';
 import './App.css';
 import Modal from './components/Modal/Modal';
 import UncontrolledForms from './components/UncontrolledForms';
-import ReactHookForm from './components/ReactHookForm';
+
 import { useForms } from './store/store';
-import CardList from './components/CardList/cardList';
+import CardList from './components/CardList';
+import ReactHookForm from './components/ReactHookForm';
 
 function App() {
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -21,7 +22,7 @@ function App() {
   };
   const openReactHookForm = () => {
     setIsOpenModal(true);
-    setChildrenModal(<ReactHookForm />);
+    setChildrenModal(<ReactHookForm onClose={onClose}/>);
   };
 
   return (
@@ -32,8 +33,7 @@ function App() {
         <button
           type="button"
           className="counter"
-          onClick={openUncontrolledForm}
-        >
+          onClick={openUncontrolledForm}>
           Uncontrolled Forms
         </button>
         <button type="button" className="counter" onClick={openReactHookForm}>

@@ -16,6 +16,7 @@ const Input = ({
   placeholder,
   type,
   onChange,
+  ...props
 }: InputProps) => {
   return (
     <div>
@@ -30,6 +31,7 @@ const Input = ({
         type={type}
         className="border-solid rounded-xs outline-none bg-cyan-50"
         onChange={onChange}
+        {...props}
       />
 
       <div className="text-red-500 my-2">{error ?? '\u00A0'}</div>

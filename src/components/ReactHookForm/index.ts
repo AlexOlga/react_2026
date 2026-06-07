@@ -1,1 +1,1 @@
-export {default} from './ReactHookForm';
+export {default} from './ReactHookForm.tsx';

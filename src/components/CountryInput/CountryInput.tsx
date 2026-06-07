@@ -5,6 +5,7 @@ interface CountryInputProps {   error?: string;
 
 const CountryInput = ({ 
   error,
+  ...props
 }: CountryInputProps)=> {
   const countries = useForms((state) => state.countries);
 
@@ -15,7 +16,8 @@ const CountryInput = ({
         id="country"
         name="country"
         list="countries"  
-        className="bg-cyan-50"         
+        className="bg-cyan-50" 
+        {...props}        
       />
 
       <datalist id="countries">
