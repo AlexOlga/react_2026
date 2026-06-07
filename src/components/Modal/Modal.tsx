@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { useEffect, useRef, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 
 type ModalProps = {
@@ -8,16 +8,27 @@ type ModalProps = {
 };
 const modalRoot = document.body;
 const Modal = ({ isOpen, onClose, children }: ModalProps) => {
-  if (!isOpen) return null;
-  const handleEsc = (event: KeyboardEvent | globalThis.KeyboardEvent) => {
+const dialogRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+  const handleEsc = (event: KeyboardEvent) => {
     if (event.key === 'Escape') {
       onClose();
     }
   };
+
   document.addEventListener('keydown', handleEsc);
-  const handleOverlayClick = (
-    event: React.MouseEvent<HTMLDivElement>,
-  ) => {
+
+  return () => {
+    document.removeEventListener('keydown', handleEsc);
+  };
+}, [onClose]);
+useEffect(() => {
+  if (isOpen) {
+    dialogRef.current?.focus();
+  }
+}, [isOpen]);
+  if (!isOpen) return null;
+  const handleOverlayClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
       onClose();
     }
@@ -25,19 +36,26 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
   return createPortal(
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
-      onClick={ handleOverlayClick}
+      onClick={handleOverlayClick}
     >
       <div
+        role="dialog"
         aria-modal="true"
+         tabIndex={-1}
         className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl outline-none"
+        ref={dialogRef}
       >
-        <div>          
-          <button onClick={onClose} className=" text-xl">
-            X
-          </button>
-        </div>
+   
 
         {children}
+             <div className="flex items-center justify-center p-5 w-100">   
+              <button
+            onClick={onClose}
+            className="bg-blue-500 p-3 text-white rounded-xl"
+          >
+            Close
+          </button>
+        </div>
       </div>
     </div>,
     modalRoot
