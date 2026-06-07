@@ -1,1 +1,1 @@
-export {default} from './GenderPicker';
+export { default } from './GenderPicker';

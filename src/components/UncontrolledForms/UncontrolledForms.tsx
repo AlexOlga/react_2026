@@ -58,9 +58,9 @@ const UncontrolledForms = (props: MyFormProps) => {
       isNew: true,
     };
     addForm(newData);
-setTimeout(() => {
-  newData.isNew = false;
-}, 3000);
+    setTimeout(() => {
+      newData.isNew = false;
+    }, 3000);
     formRef.current?.reset();
     props.onClose();
   };

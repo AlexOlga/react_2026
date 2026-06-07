@@ -1,1 +1,1 @@
-export {default} from './UncontrolledForms';
+export { default } from './UncontrolledForms';

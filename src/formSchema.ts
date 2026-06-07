@@ -29,7 +29,6 @@ export const formSchema = (countries: string[]) =>
       country: z.string().refine((value) => {
         return countries.includes(value);
       }, 'Country must be selected from list'),
-      
     })
     .refine((data) => data.password === data.confirmPassword, {
       path: ['confirmPassword'],

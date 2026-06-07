@@ -22,7 +22,7 @@ function App() {
   };
   const openReactHookForm = () => {
     setIsOpenModal(true);
-    setChildrenModal(<ReactHookForm onClose={onClose}/>);
+    setChildrenModal(<ReactHookForm onClose={onClose} />);
   };
 
   return (
@@ -33,7 +33,8 @@ function App() {
         <button
           type="button"
           className="counter"
-          onClick={openUncontrolledForm}>
+          onClick={openUncontrolledForm}
+        >
           Uncontrolled Forms
         </button>
         <button type="button" className="counter" onClick={openReactHookForm}>

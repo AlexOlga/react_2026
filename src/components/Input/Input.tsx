@@ -26,7 +26,7 @@ const Input = ({
 
       <input
         id={id}
-        name={id}       
+        name={id}
         placeholder={placeholder}
         type={type}
         className="border-solid rounded-xs outline-none bg-cyan-50"
