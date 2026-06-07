@@ -4,9 +4,9 @@ interface PasswordStrengthProps {
   password: string;
 }
 
-const PasswordStrength = ({ password }: PasswordStrengthProps) => {
+const PasswordStrength = ({ password }: PasswordStrengthProps) => { 
   const checks = getPasswordChecks(password);
-  const getColorText = (check: boolean) => (check ? 'text-green-500' : '');
+  const getColorText = (check: boolean) => (check ? 'text-green-500' : '');  
   return (
     <div>
       <p>Password requirements:</p>

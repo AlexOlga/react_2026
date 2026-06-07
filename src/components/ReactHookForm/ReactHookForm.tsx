@@ -11,13 +11,13 @@ type MyFormProps = {
 };
 type FormValues = {
   name: string;
-  age: number;     
+  age: number;
   email: string;
-  gender: 'male'|'female'|'other';
+  gender: 'Male' | 'Female' | 'Other';
   country: string;
-  password:string;
+  password: string;
   terms: boolean;
-  confirmPassword:string;
+  confirmPassword: string;
 };
 const ReactHookForm = ({ onClose }: MyFormProps) => {
   const countries = useForms((state) => state.countries);
@@ -26,6 +26,7 @@ const ReactHookForm = ({ onClose }: MyFormProps) => {
     register,
     handleSubmit,
     control,
+    reset,
     formState: { errors, isValid },
   } = useForm({
     resolver: zodResolver(formSchema(countries)),
@@ -35,15 +36,20 @@ const ReactHookForm = ({ onClose }: MyFormProps) => {
     control,
     name: 'password',
   });
-  const onSubmit = (data:FormValues ) => {  
+  const onSubmit = (data: FormValues) => {
     const newData = {
       name: String(data.name),
       age: Number(data.age),
       email: String(data.email),
       gender: String(data.gender),
       country: String(data.country),
+      isNew: true,
     };
     addForm(newData);
+    setTimeout(() => {
+      newData.isNew = false;
+    }, 10000);
+    reset();
     onClose();
   };
   return (

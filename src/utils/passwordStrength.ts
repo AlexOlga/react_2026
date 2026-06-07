@@ -6,6 +6,12 @@ export interface PasswordChecks {
 }
 
 export function getPasswordChecks(password: string): PasswordChecks {
+     if(!password) return {
+  hasNumber: false,
+  hasUppercase: false,
+  hasLowercase: false,
+  hasSpecial: false,
+};
   return {
     hasNumber: /\d/.test(password),
     hasUppercase: /[A-Z]/.test(password),

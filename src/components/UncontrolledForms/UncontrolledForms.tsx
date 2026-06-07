@@ -55,8 +55,12 @@ const UncontrolledForms = (props: MyFormProps) => {
       email: String(data.email),
       gender: String(data.gender),
       country: String(data.country),
+      isNew: true,
     };
     addForm(newData);
+setTimeout(() => {
+  newData.isNew = false;
+}, 3000);
     formRef.current?.reset();
     props.onClose();
   };

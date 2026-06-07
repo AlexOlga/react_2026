@@ -20,7 +20,7 @@ export const formSchema = (countries: string[]) =>
 
       confirmPassword: z.string().min(1, 'Confirm password is required'),
 
-      gender: z.enum(['male', 'female', 'other']),
+      gender: z.enum(['Male', 'Female', 'Other']),
 
       terms: z.boolean().refine((value) => value === true, {
         message: 'You must accept Terms & Conditions',
