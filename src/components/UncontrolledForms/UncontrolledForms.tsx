@@ -10,12 +10,14 @@ import GenderPicker from '../GenderPicker';
 import CountryInput from '../CountryInput';
 import { formSchema } from '../../formSchema';
 import { useForms } from '../../store/store';
-
-const UncontrolledForms = () => {
+type MyFormProps = {
+  onClose: () => void;
+};
+const UncontrolledForms = (props: MyFormProps) => {
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<Record<string, string>>({});
   const countries = useForms((state) => state.countries);
-  const  addForm =  useForms((state) => state.addForm);
+  const addForm = useForms((state) => state.addForm);
   const formRef = useRef<HTMLFormElement>(null);
   const handleSubmit: SubmitEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
@@ -47,16 +49,16 @@ const UncontrolledForms = () => {
       return;
     }
     setErrors({});
-    const newData ={
-  name: String(data.name),
-  age: Number(data.age),
-  email: String(data.email),
-  gender: String(data.gender), 
-  country: String(data.country),
-};
-    
-    addForm(  newData);
-    console.log('Отправка данных:', data);
+    const newData = {
+      name: String(data.name),
+      age: Number(data.age),
+      email: String(data.email),
+      gender: String(data.gender),
+      country: String(data.country),
+    };
+    addForm(newData);
+    formRef.current?.reset();
+    props.onClose();
   };
 
   const changePassword = (e: ChangeEvent<HTMLInputElement>) => {

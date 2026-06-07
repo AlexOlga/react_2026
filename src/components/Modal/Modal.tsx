@@ -43,9 +43,7 @@ useEffect(() => {
         aria-modal="true"
          tabIndex={-1}
         className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl outline-none"
-        ref={dialogRef}
-      >
-   
+        ref={dialogRef}      > 
 
         {children}
              <div className="flex items-center justify-center p-5 w-100">   

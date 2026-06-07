@@ -3,21 +3,27 @@ import './App.css';
 import Modal from './components/Modal/Modal';
 import UncontrolledForms from './components/UncontrolledForms';
 import ReactHookForm from './components/ReactHookForm';
+import { useForms } from './store/store';
+import CardList from './components/CardList/cardList';
 
 function App() {
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const [childrenModal, setChildrenModal ] = useState<null| ReactNode>(null);
-  const openUncontrolledForm = ()=>{
+  const [childrenModal, setChildrenModal] = useState<null | ReactNode>(null);
+  const users = useForms((state) => state.users);
+
+  const onClose = () => {
+    setIsOpenModal(false);
+    setChildrenModal(null);
+  };
+  const openUncontrolledForm = () => {
     setIsOpenModal(true);
-     setChildrenModal(<UncontrolledForms/>)
-  }
-  const onClose=() => {setIsOpenModal(false)
-setChildrenModal(null);
-  }
-    const openReactHookForm = ()=>{
+    setChildrenModal(<UncontrolledForms onClose={onClose} />);
+  };
+  const openReactHookForm = () => {
     setIsOpenModal(true);
-     setChildrenModal(<ReactHookForm/>)
-  }
+    setChildrenModal(<ReactHookForm />);
+  };
+
   return (
     <>
       <header>
@@ -26,7 +32,7 @@ setChildrenModal(null);
         <button
           type="button"
           className="counter"
-          onClick={ openUncontrolledForm}
+          onClick={openUncontrolledForm}
         >
           Uncontrolled Forms
         </button>
@@ -34,9 +40,13 @@ setChildrenModal(null);
           React Hook Form
         </button>
       </header>
+      <main>
+        <CardList list={users} />
+      </main>
 
-      <Modal isOpen={isOpenModal}   onClose={onClose} >{childrenModal}</Modal>
-    
+      <Modal isOpen={isOpenModal} onClose={onClose}>
+        {childrenModal}
+      </Modal>
     </>
   );
 }

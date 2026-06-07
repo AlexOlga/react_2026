@@ -2,14 +2,14 @@ import { create } from 'zustand'
 import type { User } from '../types/User';
 
 export interface IFormsStore {
-  forms: User[];
+  users: User[];
   addForm: (form: User) => void;
    countries:string[]
 }
 
 export const useForms = create<IFormsStore>((set) => ({
-  forms: [],
+  users: [],
   countries: ['Belarus', 'France', 'Germany','Italy','Poland','Russia','Spain', 'Ukraine'],
-  addForm: (form: User) => set((state) => ({  forms: state.forms.concat(form) })),
+  addForm: (user: User) => set((state) => ({  users: state.users.concat(user) })),
  
 }))
