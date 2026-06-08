@@ -33,7 +33,7 @@ function App() {
         <button
           type="button"
           className="counter mr-4"
-          onClick={openUncontrolledForm}          
+          onClick={openUncontrolledForm}
         >
           Uncontrolled Forms
         </button>
@@ -48,7 +48,6 @@ function App() {
       <Modal isOpen={isOpenModal} onClose={onClose}>
         {childrenModal}
       </Modal>
-     
     </>
   );
 }

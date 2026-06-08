@@ -37,7 +37,7 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
   if (!modalRoot) return;
   return createPortal(
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 overflow-y-auto rounded"
       onClick={handleOverlayClick}
     >
       <div
