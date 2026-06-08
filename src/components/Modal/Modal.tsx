@@ -6,7 +6,7 @@ type ModalProps = {
   onClose: () => void;
   children: ReactNode;
 };
-const modalRoot = document.body;
+
 const Modal = ({ isOpen, onClose, children }: ModalProps) => {
   const dialogRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -33,6 +33,8 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
       onClose();
     }
   };
+  const modalRoot = document.getElementById('modal-root');
+  if (!modalRoot) return;
   return createPortal(
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"

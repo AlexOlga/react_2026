@@ -1,4 +1,4 @@
-import { getPasswordChecks } from '../../utils/passwordStrength';
+import { getPasswordChecks } from '../../utils/getPasswordChecks';
 
 interface PasswordStrengthProps {
   password: string;

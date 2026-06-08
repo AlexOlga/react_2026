@@ -7,6 +7,7 @@ const Card = (data: User) => {
         'w-40 h-40 p-5  border-solid border-2 rounded-xl ' +
         (data.isNew ? 'border-red-300' : '')
       }
+      data-testid="user-card"
     >
       <h3>{data.name}</h3>
       <p>

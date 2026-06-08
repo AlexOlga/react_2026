@@ -10,13 +10,12 @@ describe('ReactHookForm', () => {
     render(<ReactHookForm onClose={vi.fn()} />);
     expect(screen.getByLabelText(/name/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/age/i)).toBeInTheDocument();    
+    expect(screen.getByLabelText(/age/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/terms/i));
     expect(screen.getByLabelText(/^password$/i));
     expect(screen.getByLabelText(/confirm password/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/gender/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/country/i)).toBeInTheDocument();
-
   });
 
   test('shows validation errors', async () => {
@@ -33,12 +32,10 @@ describe('ReactHookForm', () => {
   });
   test('submits valid form', async () => {
     const user = userEvent.setup();
-
     render(<ReactHookForm onClose={vi.fn()} />);
-    
-  const submitButton = screen.getByRole('button', {
-    name: /submit/i,
-  });
+    const submitButton = screen.getByRole('button', {
+      name: /submit/i,
+    });
     expect(submitButton).toBeDisabled();
 
     await user.type(screen.getByLabelText(/name/i), 'Ivan');
@@ -50,8 +47,7 @@ describe('ReactHookForm', () => {
     await user.selectOptions(screen.getByLabelText(/gender/i), 'Male');
     await user.type(screen.getByLabelText(/country/i), 'France');
     expect(submitButton).not.toBeDisabled();
-    await user.click(submitButton); 
+    await user.click(submitButton);
     expect(useForms.getState().users).toHaveLength(1);
   });
-
 });
