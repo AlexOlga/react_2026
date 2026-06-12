@@ -47,15 +47,16 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
         className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl outline-none"
         ref={dialogRef}
       >
-        {children}
-        <div className="flex items-center justify-center p-5 w-100">
+        <div className="flex items-center justify-end p-5 w-100">
           <button
             onClick={onClose}
-            className="bg-blue-500 p-3 text-white rounded-xl"
+            className="bg-blue-500 w-6 h-6 text-white rounded-xm"
           >
-            Close
+          x
           </button>
         </div>
+        {children}
+        
       </div>
     </div>,
     modalRoot
