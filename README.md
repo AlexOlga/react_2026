@@ -7,15 +7,20 @@ The implementation follows the requirements of the RS School task "API Querying 
 
 ### Getting Started
 
-Installation
-Clone Repository
+#### Installation
+- Clone Repository
 git clone <https://github.com/AlexOlga/react_2026>
 
-Install Dependencies
+- Install Dependencies
+```
 npm install
-Start Development Server
+```
+- Start Development Server
+```
 npm run dev
-Run Tests
+```
+- Run Tests
+```
 npm run test
-Run Coverage
 npm run coverage
+```

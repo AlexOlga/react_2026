@@ -12,10 +12,6 @@ const CardDetails = () => {
   const { cardId } = useParams();
   const navigate = useNavigate();
   const pokemonDetails = usePokemonDetails(cardId);
-  /*  if (!pokemonDetails.data) return;
-  const pokemon = pokemonDetails.data;
-  const page = searchParams.get('page');*/
-
   if (pokemonDetails.isLoading)
     return (
       <div className="flex justify-center p-8">
