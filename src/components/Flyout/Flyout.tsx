@@ -1,5 +1,4 @@
 import queryClient from '../../client';
-// import { URL_API } from '../../constants/global';
 import { pokemonDetailsOptions } from '../../hooks/usePokemonDetails';
 import { buttonStyles } from '../../shared/styles/button';
 import { useFavorites } from '../../store/storeFavorites';
