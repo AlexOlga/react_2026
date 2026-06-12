@@ -1,9 +1,10 @@
-import { URL_API } from '../../constants/global';
+import queryClient from '../../client';
+// import { URL_API } from '../../constants/global';
+import { pokemonDetailsOptions } from '../../hooks/usePokemonDetails';
 import { buttonStyles } from '../../shared/styles/button';
 import { useFavorites } from '../../store/storeFavorites';
 import { createCSVContext } from '../../utils/createCSVContext';
 import { downloadData } from '../../utils/downloadData';
-import { getPokemonsData } from '../../utils/getPokemons';
 
 const Flyout = () => {
   const allFavorites = useFavorites((state) => state.totalFavorite());
@@ -11,8 +12,11 @@ const Flyout = () => {
   const favorites = useFavorites((state) => state.favorites);
 
   const download = async () => {
-    const pokemons = favorites.map((id) => ({ url: `${URL_API}${id}` }));
-    const data = await getPokemonsData(pokemons);
+    const data = await Promise.all(
+      favorites.map((id) =>
+        queryClient.fetchQuery(pokemonDetailsOptions(String(id)))
+      )
+    );
     const csvContent = createCSVContext(data);
     const blob = new Blob([csvContent], {
       type: 'text/csv;charset=utf-8;',

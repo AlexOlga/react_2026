@@ -1,6 +1,6 @@
 import { URL_API } from '../constants/global';
 import type { Pokemon } from '../types/pokemon';
-import baseFetch from './baseFeatch';
+import baseFetch from './baseFetch';
 
 async function getPokemonByName(name: string): Promise<Pokemon[]> {
   const data: Pokemon = await baseFetch(`${URL_API}${name.toLowerCase()}`);

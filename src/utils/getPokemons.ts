@@ -1,10 +1,10 @@
 import { API_QUERY, URL_API } from '../constants/global';
 import type { ApiResponse } from '../types/api';
 import type { Pokemon } from '../types/pokemon';
-import baseFetch from './baseFeatch';
+import baseFetch from './baseFetch';
 
 type PokemonUrl = {
-  name?: string;
+  name: string;
   url: string;
 };
 
@@ -17,6 +17,7 @@ async function getPokemonsUrl(
   );
   return data;
 }
+
 export async function getPokemonsData(
   pokemons: PokemonUrl[]
 ): Promise<Pokemon[]> {

@@ -12,22 +12,26 @@ const CardDetails = () => {
   const { cardId } = useParams();
   const navigate = useNavigate();
   const pokemonDetails = usePokemonDetails(cardId);
-  if (!pokemonDetails.data) return;
+  /*  if (!pokemonDetails.data) return;
   const pokemon = pokemonDetails.data;
-  const page = searchParams.get('page');
+  const page = searchParams.get('page');*/
 
-  const onClose = () => {
-    navigate(`/?page=${page}`);
-  };
-  if (pokemonDetails.isLoading) {
+  if (pokemonDetails.isLoading)
     return (
       <div className="flex justify-center p-8">
         <Loading />
       </div>
     );
-  }
   if (pokemonDetails.error)
     return <ErrorAlert message={pokemonDetails.error.message} />;
+  if (!pokemonDetails.data) return null;
+
+  const pokemon = pokemonDetails.data;
+  const page = searchParams.get('page');
+  const onClose = () => {
+    navigate(`/?page=${page}`);
+  };
+
   const imgURL = pokemon.sprites?.front_default
     ? pokemon.sprites.front_default
     : placeholderURL;

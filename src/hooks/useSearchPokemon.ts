@@ -3,7 +3,7 @@ import getPokemonByName from '../utils/getPokemonByName';
 
 export function useSearchPokemon(name: string) {
   return useQuery({
-    queryKey: ['pokemon', name],
+    queryKey: ['pokemon', 'search', name],
     queryFn: () => getPokemonByName(name),
     enabled: !!name,
   });

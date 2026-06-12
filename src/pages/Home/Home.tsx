@@ -35,7 +35,7 @@ const Home = () => {
     if (!searchParams.get('page')) {
       navigate('/?page=1', { replace: true });
     }
-  }, []);
+  }, [searchParams, navigate]);
 
   if (pokemonsList.isLoading || pokemonSearchQuery.isLoading)
     return <Loading />;
