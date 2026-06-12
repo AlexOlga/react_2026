@@ -8,7 +8,7 @@ const PasswordStrength = ({ password }: PasswordStrengthProps) => {
   const checks = getPasswordChecks(password);
   const getColorText = (check: boolean) => (check ? 'text-green-500' : '');
   return (
-    <div className='text-xs my-1'>
+    <div className="text-xs my-1">
       <p>Password requirements:</p>
 
       <ul>

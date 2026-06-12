@@ -51,7 +51,9 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
           <button
             onClick={onClose}
             className="w-6 h-6 flex items-center justify-center hover:bg-blue-300"
-          >x</button>
+          >
+            x
+          </button>
         </div>
         {children}
       </div>

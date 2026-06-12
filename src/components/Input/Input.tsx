@@ -1,6 +1,6 @@
-import type { ChangeEventHandler } from 'react';
+import type { ChangeEventHandler, InputHTMLAttributes } from 'react';
 
-type InputProps = {
+type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   id: string;
   label: string;
   error?: string;

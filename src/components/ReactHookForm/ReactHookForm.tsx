@@ -6,22 +6,17 @@ import { formSchema } from '../../formSchema';
 import { useForms } from '../../store/store';
 import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import type z from 'zod';
+
 type MyFormProps = {
   onClose: () => void;
 };
-type FormValues = {
-  name: string;
-  age: number;
-  email: string;
-  gender: 'Male' | 'Female' | 'Other';
-  country: string;
-  password: string;
-  terms: boolean;
-  confirmPassword: string;
-};
+
 const ReactHookForm = ({ onClose }: MyFormProps) => {
   const countries = useForms((state) => state.countries);
   const addForm = useForms((state) => state.addForm);
+  const schema = formSchema(countries);
+  type FormValues = z.infer<typeof schema>;
   const {
     register,
     handleSubmit,
@@ -29,7 +24,7 @@ const ReactHookForm = ({ onClose }: MyFormProps) => {
     reset,
     formState: { errors, isValid },
   } = useForm({
-    resolver: zodResolver(formSchema(countries)),
+    resolver: zodResolver(schema),
     mode: 'onChange',
   });
   const password = useWatch({
@@ -37,12 +32,14 @@ const ReactHookForm = ({ onClose }: MyFormProps) => {
     name: 'password',
   });
   const onSubmit = (data: FormValues) => {
+    const imgUrl = data.img ? URL.createObjectURL(data.img) : null;
     const newData = {
       name: String(data.name),
       age: Number(data.age),
       email: String(data.email),
       gender: String(data.gender),
       country: String(data.country),
+      img: imgUrl,
       isNew: true,
     };
     addForm(newData);
@@ -100,6 +97,14 @@ const ReactHookForm = ({ onClose }: MyFormProps) => {
         id={'gender'}
         {...register('gender')}
         error={errors.gender?.message}
+      />
+      <Input
+        id="img"
+        type="file"
+        label=" Select file"
+        accept="image/png,image/jpeg"
+        {...register('img')}
+        error={errors.img?.message?.toString()}
       />
       <CountryInput {...register('country')} error={errors.country?.message} />
       <Input

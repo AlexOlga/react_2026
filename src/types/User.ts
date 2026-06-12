@@ -4,5 +4,6 @@ export type User = {
   email: string;
   gender: string;
   country: string;
+  img: string|null;
   isNew: boolean;
 };

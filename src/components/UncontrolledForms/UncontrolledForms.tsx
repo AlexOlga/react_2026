@@ -70,7 +70,7 @@ const UncontrolledForms = (props: MyFormProps) => {
     setTimeout(() => {
       newData.isNew = false;
     }, 3000);
-    formRef.current?.reset();
+    formRef.current?.reset();  
     props.onClose();
   };
 
@@ -118,24 +118,13 @@ const UncontrolledForms = (props: MyFormProps) => {
         error={errors.confirmPassword}
       />
       <GenderPicker id={'gender'} error={errors.gender} />
-
-      <div>
-        <label htmlFor="img" className="mr-5">
-          Select file
-        </label>
-
-        <input
-          id="img"
-          name="img"
-          type="file"
-          className="border-solid rounded-xs outline-none bg-cyan-50"
-          accept="image/png,image/jpeg"
-        />
-
-        <div className="text-red-500 my-1 text-xs">
-          {errors.img ?? '\u00A0'}
-        </div>
-      </div>
+      <Input
+        id="img"
+        type="file"
+        label=" Select file"
+        error={errors.img}
+        accept='image/png,image/jpeg' 
+      />
       <CountryInput error={errors.country} />
       <Input
         id="terms"

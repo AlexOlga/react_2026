@@ -20,14 +20,19 @@ Clone Repository
 git clone <https://github.com/AlexOlga/react_2026>
 
 #### Install Dependencies
+
 ```
 npm install
 ```
+
 #### Start Development Server
+
 ```
 npm run dev
 ```
+
 #### Run Tests
+
 ```
 npm run test
 npm run coverage
