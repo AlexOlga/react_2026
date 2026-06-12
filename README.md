@@ -1,13 +1,18 @@
 ## React Forms
+
 ## Overview
+
 This project is part of the RS School React course (Forms module).
+
 ## Tech Stack
+
 React
 TypeScript
 React Hooks
 Zod
 Zustand
 Vite
+
 ### Getting Started
 
 Installation

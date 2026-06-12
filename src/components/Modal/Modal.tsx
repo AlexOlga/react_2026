@@ -52,11 +52,10 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
             onClick={onClose}
             className="bg-blue-500 w-6 h-6 text-white rounded-xm"
           >
-          x
+            x
           </button>
         </div>
         {children}
-        
       </div>
     </div>,
     modalRoot
