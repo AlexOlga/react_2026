@@ -1,63 +1,33 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Outlet, useNavigate, useSearchParams } from 'react-router';
 import BuggyButton from '../../components/BuggyButton/BuggyButton';
-import getPokemonByName from '../../utils/getPokemonByName';
-import getPokemons from '../../utils/getPokemons';
 import { PAGE_LIMIT } from '../../constants/global';
-import { errorMessages } from '../../shared/text';
 import CardList from '../../components/CardList';
 import Loading from '../../components/Loading';
 import ErrorAlert from '../../components/ErrorAlert';
-import type { Pokemon } from '../../types/pokemon';
 import Pagination from '../../components/Pagination';
 import { useSearch } from '../../context/SearchContext/useSearch';
 import Flyout from '../../components/Flyout';
+import { usePokemons } from '../../hooks/usePokemons';
+import { useSearchPokemon } from '../../hooks/useSearchPokemon';
+import RefreshButton from '../../components/RefreshButton';
 
 const Home = () => {
   const [searchParams] = useSearchParams();
   const currentPage = Number(searchParams.get('page')) || 1;
   const navigate = useNavigate();
-  const [pokemons, setPokemons] = useState<Pokemon[]>([]);
   const { searchQuery } = useSearch();
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [totalPages, setTotalPages] = useState<number>(1);
-
-  const fetchPokemonList = useCallback(async () => {
-    const data = await getPokemons(PAGE_LIMIT, currentPage);
-    setPokemons(data.results);
-    setTotalPages(Math.ceil(data.count / PAGE_LIMIT));
-  }, [currentPage]);
-  const fetchPokemonSearch = useCallback(async (query: string) => {
-    const data = await getPokemonByName(query);
-    setPokemons(data);
-    setTotalPages(1);
-  }, []);
-
-  const fetchPokemonsByQuery = useCallback(
-    async (query: string) => {
-      try {
-        setIsLoading(true);
-        setIsError(false);
-        setErrorMessage('');
-        if (query.trim() === '') {
-          await fetchPokemonList();
-        } else {
-          await fetchPokemonSearch(query);
-        }
-      } catch (error: unknown) {
-        setIsError(true);
-        setErrorMessage(
-          error instanceof Error ? error.message : errorMessages.other
-        );
-      } finally {
-        setIsLoading(false);
-      }
-    },
-    [fetchPokemonList, fetchPokemonSearch]
-  );
-
+  const pokemonsList = usePokemons(currentPage);
+  const pokemonSearchQuery = useSearchPokemon(searchQuery);
+  const pokemons =
+    (searchQuery === ''
+      ? pokemonsList.data?.results
+      : pokemonSearchQuery.data) || [];
+  const totalPages =
+    searchQuery === '' && pokemonsList.data?.count
+      ? Math.ceil(pokemonsList.data?.count / PAGE_LIMIT)
+      : 1;
+  const error = pokemonsList.error || pokemonSearchQuery.error;
   const onPageChange = async (page: number) => {
     navigate(`/?page=${page}`);
   };
@@ -65,15 +35,11 @@ const Home = () => {
     if (!searchParams.get('page')) {
       navigate('/?page=1', { replace: true });
     }
-  }, []);
+  }, [searchParams, navigate]);
 
-  useEffect(() => {
-    const load = async () => await fetchPokemonsByQuery(searchQuery);
-    load();
-  }, [searchQuery, currentPage]);
-
-  if (isLoading) return <Loading />;
-  if (isError) return <ErrorAlert message={errorMessage} />;
+  if (pokemonsList.isLoading || pokemonSearchQuery.isLoading)
+    return <Loading />;
+  if (error) return <ErrorAlert message={error.message} />;
 
   return (
     <>
@@ -97,8 +63,9 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="flex justify-center p-4">
+      <div className="flex justify-center p-4 gap-4">
         <BuggyButton />
+        <RefreshButton />
       </div>
       <Flyout />
     </>

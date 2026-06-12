@@ -2,8 +2,6 @@ import { render, screen } from '@testing-library/react';
 import { describe, test, expect, beforeEach } from 'vitest';
 import { vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
-import getPokemons from '../../utils/getPokemons';
-import getPokemonByName from '../../utils/getPokemonByName';
 import useLocalStorage from '../../hooks/useLocalStorage';
 import Home from './Home';
 import { SearchProvider } from '../../context/SearchContext/SearchContext';
@@ -11,105 +9,161 @@ import { MemoryRouter } from 'react-router';
 import { mockPokemon, mockPokemonData } from '../../__mocks__/mocks';
 import { TEXTS } from '../../shared/text';
 import ErrorBoundary from '../../components/ErrorBoundary';
+import { usePokemons } from '../../hooks/usePokemons';
+import { useSearchPokemon } from '../../hooks/useSearchPokemon';
+import { type UseQueryResult } from '@tanstack/react-query';
+import type { Pokemon } from '../../types/pokemon';
+import type { ApiResponse } from '../../types/api';
 
-vi.mock('../../utils/getPokemons');
-vi.mock('../../utils/getPokemonByName');
-vi.mock('../../hooks/useLocalStorage', () => {
-  return {
-    default: vi.fn(),
-  };
-});
+vi.mock('../../hooks/usePokemons', () => ({
+  usePokemons: vi.fn(),
+}));
 
-const mockedGetPokemons = vi.mocked(getPokemons);
-const mockedGetPokemonByName = vi.mocked(getPokemonByName);
+vi.mock('../../hooks/useSearchPokemon', () => ({
+  useSearchPokemon: vi.fn(),
+}));
 
+vi.mock('../../hooks/useLocalStorage', () => ({
+  default: vi.fn(),
+}));
+
+const mockedUsePokemons = vi.mocked(usePokemons);
+const mockedUseSearchPokemon = vi.mocked(useSearchPokemon);
+const mockedUseLocalStorage = vi.mocked(useLocalStorage);
 describe('Home', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
-  describe('Behavior-Focused Testing', () => {
-    test('renders pokemon list after successful API request', async () => {
-      vi.mocked(useLocalStorage).mockReturnValue(['', vi.fn()]);
-      mockedGetPokemons.mockResolvedValue(mockPokemonData);
+  test('renders pokemon list', async () => {
+    mockedUseLocalStorage.mockReturnValue(['', vi.fn()]);
 
-      render(
-        <MemoryRouter>
-          <SearchProvider>
-            <Home />
-          </SearchProvider>
-        </MemoryRouter>
-      );
+    mockedUsePokemons.mockReturnValue({
+      data: mockPokemonData,
+      isLoading: false,
+      error: null,
+    } as unknown as UseQueryResult<ApiResponse<Pokemon>, Error>);
 
-      expect(await screen.findByText('pikachu')).toBeInTheDocument();
-      expect(screen.getByText('clefairy')).toBeInTheDocument();
-    });
+    mockedUseSearchPokemon.mockReturnValue({
+      data: [],
+      isLoading: false,
+      error: null,
+    } as unknown as UseQueryResult<Pokemon[], Error>);
 
-    test('renders error message when API request fails', async () => {
-      mockedGetPokemons.mockRejectedValue(new Error('API Error'));
-      render(
-        <MemoryRouter>
-          <SearchProvider>
-            <Home />
-          </SearchProvider>
-        </MemoryRouter>
-      );
+    render(
+      <MemoryRouter>
+        <SearchProvider>
+          <Home />
+        </SearchProvider>
+      </MemoryRouter>
+    );
 
-      expect(await screen.findByText('API Error')).toBeInTheDocument();
-    });
-    test('loads and shows pokemon based on stored search query', async () => {
-      mockedGetPokemonByName.mockResolvedValue([mockPokemon] as never);
-      vi.mocked(useLocalStorage).mockReturnValue(['pikachu', vi.fn()]);
-
-      render(
-        <MemoryRouter>
-          <SearchProvider>
-            <Home />
-          </SearchProvider>
-        </MemoryRouter>
-      );
-      expect(mockedGetPokemonByName).toHaveBeenCalledWith('pikachu');
-
-      expect(await screen.findByText('pikachu')).toBeInTheDocument();
-    });
+    expect(await screen.findByText('pikachu')).toBeInTheDocument();
+    expect(screen.getByText('clefairy')).toBeInTheDocument();
   });
-  describe('API mocking tests', () => {
-    test('uses mocked getPokemons API call', async () => {
-      vi.mocked(useLocalStorage).mockReturnValue(['', vi.fn()]);
-      mockedGetPokemons.mockResolvedValue(mockPokemonData);
+  test('renders loading', async () => {
+    mockedUseLocalStorage.mockReturnValue(['', vi.fn()]);
 
-      render(
+    mockedUsePokemons.mockReturnValue({
+      data: mockPokemonData,
+      isLoading: true,
+      error: null,
+    } as unknown as UseQueryResult<ApiResponse<Pokemon>, Error>);
+
+    mockedUseSearchPokemon.mockReturnValue({
+      data: [],
+      isLoading: false,
+      error: null,
+    } as unknown as UseQueryResult<Pokemon[], Error>);
+
+    render(
+      <MemoryRouter>
+        <SearchProvider>
+          <Home />
+        </SearchProvider>
+      </MemoryRouter>
+    );
+    expect(screen.getByRole('status', { name: 'Loading' })).toBeInTheDocument();
+  });
+  test('renders error message', async () => {
+    mockedUseLocalStorage.mockReturnValue(['', vi.fn()]);
+
+    mockedUsePokemons.mockReturnValue({
+      data: undefined,
+      isLoading: false,
+      error: new Error('API Error'),
+    } as unknown as UseQueryResult<ApiResponse<Pokemon>, Error>);
+
+    mockedUseSearchPokemon.mockReturnValue({
+      data: [],
+      isLoading: false,
+      error: null,
+    } as unknown as UseQueryResult<Pokemon[], Error>);
+
+    render(
+      <MemoryRouter>
+        <SearchProvider>
+          <Home />
+        </SearchProvider>
+      </MemoryRouter>
+    );
+
+    expect(await screen.findByText('API Error')).toBeInTheDocument();
+  });
+  test('loads and shows pokemon based on stored search query', async () => {
+    vi.mocked(useLocalStorage).mockReturnValue(['pikachu', vi.fn()]);
+    mockedUseSearchPokemon.mockReturnValue({
+      data: [mockPokemon],
+      isLoading: false,
+      error: null,
+    } as unknown as UseQueryResult<Pokemon[], Error>);
+
+    mockedUsePokemons.mockReturnValue({
+      data: mockPokemonData,
+      isLoading: false,
+      error: null,
+    } as unknown as UseQueryResult<ApiResponse<Pokemon>, Error>);
+
+    render(
+      <MemoryRouter>
+        <SearchProvider>
+          <Home />
+        </SearchProvider>
+      </MemoryRouter>
+    );
+
+    expect(await screen.findByText('pikachu')).toBeInTheDocument();
+
+    expect(mockedUseSearchPokemon).toHaveBeenCalledWith('pikachu');
+  });
+  test('renders ErrorBoundary after buggy action', async () => {
+    const user = userEvent.setup();
+    mockedUseLocalStorage.mockReturnValue(['', vi.fn()]);
+    mockedUsePokemons.mockReturnValue({
+      data: mockPokemonData,
+      isLoading: false,
+      error: null,
+    } as unknown as UseQueryResult<ApiResponse<Pokemon>, Error>);
+
+    mockedUseSearchPokemon.mockReturnValue({
+      data: [],
+      isLoading: false,
+      error: null,
+    } as unknown as UseQueryResult<Pokemon[], Error>);
+
+    render(
+      <ErrorBoundary>
         <MemoryRouter>
           <SearchProvider>
             <Home />
           </SearchProvider>
         </MemoryRouter>
-      );
+      </ErrorBoundary>
+    );
 
-      expect(await screen.findByText('pikachu')).toBeInTheDocument();
-      expect(mockedGetPokemons).toHaveBeenCalledTimes(1);
-    });
-  });
+    expect(await screen.findByText('pikachu')).toBeInTheDocument();
 
-  describe('buggy button', () => {
-    test('renders ErrorBoundary after buggy action in Home', async () => {
-      vi.mocked(useLocalStorage).mockReturnValue(['', vi.fn()]);
-      mockedGetPokemons.mockResolvedValue(mockPokemonData);
-      const user = userEvent.setup();
-      render(
-        <ErrorBoundary>
-          <MemoryRouter>
-            <SearchProvider>
-              <Home />
-            </SearchProvider>
-          </MemoryRouter>
-        </ErrorBoundary>
-      );
+    await user.click(screen.getByRole('button', { name: TEXTS.buggy.button }));
 
-      expect(await screen.findByText('pikachu')).toBeInTheDocument();
-      await user.click(
-        screen.getByRole('button', { name: TEXTS.buggy.button })
-      );
-      expect(screen.queryByText('pikachu')).not.toBeInTheDocument();
-    });
+    expect(screen.queryByText('pikachu')).not.toBeInTheDocument();
   });
 });

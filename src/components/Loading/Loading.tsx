@@ -1,9 +1,9 @@
-import Spiner from './Spiner';
+import Spinner from './Spinner';
 
 const Loading = () => {
   return (
     <div className="flex item-center justify-center">
-      <Spiner />
+      <Spinner />
     </div>
   );
 };
