@@ -1,7 +1,7 @@
 import type { User } from '../../types/User';
 import avatarImg from '../../assets/images.png';
 import { memo } from 'react';
-const Card = (data: User) => { 
+const Card = (data: User) => {
   return (
     <div
       className={

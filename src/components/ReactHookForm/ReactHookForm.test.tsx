@@ -45,6 +45,10 @@ describe('ReactHookForm', () => {
     await user.type(screen.getByLabelText(/^password$/i), 'Password123!');
     await user.type(screen.getByLabelText(/confirm password/i), 'Password123!');
     await user.selectOptions(screen.getByLabelText(/gender/i), 'Male');
+    const file = new File(['image-content'], 'avatar.png', {
+      type: 'image/png',
+    });
+    await user.upload(screen.getByLabelText(/select file/i), file);
     await user.type(screen.getByLabelText(/country/i), 'France');
     expect(submitButton).not.toBeDisabled();
     await user.click(submitButton);

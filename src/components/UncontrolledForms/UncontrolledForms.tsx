@@ -70,7 +70,7 @@ const UncontrolledForms = (props: MyFormProps) => {
     setTimeout(() => {
       newData.isNew = false;
     }, 3000);
-    formRef.current?.reset();  
+    formRef.current?.reset();
     props.onClose();
   };
 
@@ -121,9 +121,9 @@ const UncontrolledForms = (props: MyFormProps) => {
       <Input
         id="img"
         type="file"
-        label=" Select file"
+        label="Select file"
         error={errors.img}
-        accept='image/png,image/jpeg' 
+        accept="image/png,image/jpeg"
       />
       <CountryInput error={errors.country} />
       <Input
