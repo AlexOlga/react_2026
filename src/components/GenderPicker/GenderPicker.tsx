@@ -21,7 +21,7 @@ const GenderPicker = ({ id, error, ...props }: GenderProps) => {
         <option value="Other">Other</option>
       </select>
 
-      <div className="text-red-500 my-2">{error ?? '\u00A0'}</div>
+      <div className="text-red-500 my-1 text-xs">{error ?? '\u00A0'}</div>
     </div>
   );
 };

@@ -34,7 +34,7 @@ const Input = ({
         {...props}
       />
 
-      <div className="text-red-500 my-2">{error ?? '\u00A0'}</div>
+      <div className="text-red-500 my-1 text-xs">{error ?? '\u00A0'}</div>
     </div>
   );
 };

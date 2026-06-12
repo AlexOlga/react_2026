@@ -21,6 +21,12 @@ export const formSchema = (countries: string[]) =>
       confirmPassword: z.string().min(1, 'Confirm password is required'),
 
       gender: z.enum(['Male', 'Female', 'Other']),
+      img:  z.any()
+  .refine((file) => file instanceof File, 'Image is required')
+  .refine((file) => {
+     if (!(file instanceof File)) return false;
+    return file.size <= 2 * 1024 * 1024;
+  }, 'Max size 2MB'),
 
       terms: z.boolean().refine((value) => value === true, {
         message: 'You must accept Terms & Conditions',

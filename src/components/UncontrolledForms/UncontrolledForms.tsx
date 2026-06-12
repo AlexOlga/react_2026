@@ -32,8 +32,11 @@ const UncontrolledForms = (props: MyFormProps) => {
       terms: formData.has('terms'),
       country: formData.get('country'),
       gender: formData.get('gender'),
+      img: formData.get('img') as File | null,
     };
+
     const result = formSchema(countries).safeParse(data);
+
     if (!result.success) {
       const fieldErrors: Record<string, string> = {};
 
@@ -49,12 +52,18 @@ const UncontrolledForms = (props: MyFormProps) => {
       return;
     }
     setErrors({});
+    const url =
+      data.img && data.img instanceof File
+        ? URL.createObjectURL(data.img)
+        : null;
+
     const newData = {
       name: String(data.name),
       age: Number(data.age),
       email: String(data.email),
       gender: String(data.gender),
       country: String(data.country),
+      img: url,
       isNew: true,
     };
     addForm(newData);
@@ -109,6 +118,24 @@ const UncontrolledForms = (props: MyFormProps) => {
         error={errors.confirmPassword}
       />
       <GenderPicker id={'gender'} error={errors.gender} />
+
+      <div>
+        <label htmlFor="img" className="mr-5">
+          Select file
+        </label>
+
+        <input
+          id="img"
+          name="img"
+          type="file"
+          className="border-solid rounded-xs outline-none bg-cyan-50"
+          accept="image/png,image/jpeg"
+        />
+
+        <div className="text-red-500 my-1 text-xs">
+          {errors.img ?? '\u00A0'}
+        </div>
+      </div>
       <CountryInput error={errors.country} />
       <Input
         id="terms"
