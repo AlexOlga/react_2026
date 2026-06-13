@@ -1,9 +1,9 @@
-//import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { render, screen } from '@testing-library/react';
+import {  render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, test, expect, vi } from 'vitest';
 
 import UncontrolledForms from './UncontrolledForms';
+import { useForms } from '../../store/store';
 
 describe('UncontrolledForms', () => {
   test('renders form', () => {
@@ -37,7 +37,7 @@ describe('UncontrolledForms', () => {
 
     expect(screen.getByText(/age cannot be negative/i)).toBeInTheDocument();
   });
-  /* test('submits valid form', async () => {
+  test('submits valid form', async () => {
     const user = userEvent.setup();
 
     render(<UncontrolledForms onClose={vi.fn()} />);
@@ -52,19 +52,20 @@ describe('UncontrolledForms', () => {
     await user.type(screen.getByLabelText(/^password$/i), 'Password123!');
     await user.type(screen.getByLabelText(/confirm password/i), 'Password123!');
     await user.selectOptions(screen.getByLabelText(/gender/i), 'Male');
-      const file = new File(['image-content'], 'avatar.png', {
-    type: 'image/png',
-  });
-
-  const fileInput = screen.getByLabelText(/select file/i);
-
-  await user.upload(fileInput, file);
+   //
+    const file = new File(['image-content'], '../../assets/images.png', {
+      type: 'image/png',
+    });
+    await user.upload(screen.getByLabelText(/select file/i), file);
+    //
 
     await user.type(screen.getByLabelText(/country/i), 'France');
     await user.click(submitButton);
+    
     await waitFor(() => {
-  expect(useForms.getState().users).toHaveLength(1);
+  screen.debug();
 });
+    expect(useForms.getState().users).toHaveLength(1);
    
-  });*/
+  });
 });

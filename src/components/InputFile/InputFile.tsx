@@ -1,21 +1,19 @@
-import type { ChangeEventHandler, InputHTMLAttributes } from 'react';
+import type { InputHTMLAttributes } from 'react';
 
 type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   id: string;
   label: string;
   error?: string;
-  placeholder?: string; 
-  type: string;
-  onChange?: ChangeEventHandler;
+  placeholder?: string;
+  ref: React.RefObject<HTMLInputElement | null>;
 };
-
-const Input = ({
+const InputFile = ({
   id,
   label,
   error,
+  ref,
   placeholder,
-  type,
-  onChange, 
+
   ...props
 }: InputProps) => {
   return (
@@ -25,17 +23,17 @@ const Input = ({
       </label>
 
       <input
+        ref={ref}
         id={id}
         name={id}
         placeholder={placeholder}
-        type={type}
+        type="file"
+        accept="image/png,image/jpeg"
         className="border-solid rounded-xs outline-none bg-cyan-50"
-        onChange={onChange}       
         {...props}
       />
-
       <div className="text-red-500 my-1 text-xs">{error ?? '\u00A0'}</div>
     </div>
   );
 };
-export default Input;
+export default InputFile;

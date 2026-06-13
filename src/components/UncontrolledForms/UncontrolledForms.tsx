@@ -10,6 +10,7 @@ import GenderPicker from '../GenderPicker';
 import CountryInput from '../CountryInput';
 import { formSchema } from '../../formSchema';
 import { useForms } from '../../store/store';
+import InputFile from '../InputFile/InputFile';
 type MyFormProps = {
   onClose: () => void;
 };
@@ -19,10 +20,10 @@ const UncontrolledForms = (props: MyFormProps) => {
   const countries = useForms((state) => state.countries);
   const addForm = useForms((state) => state.addForm);
   const formRef = useRef<HTMLFormElement>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
   const handleSubmit: SubmitEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     const formData = new FormData(formRef.current!);
-
     const data = {
       name: formData.get('name'),
       email: formData.get('email'),
@@ -32,7 +33,7 @@ const UncontrolledForms = (props: MyFormProps) => {
       terms: formData.has('terms'),
       country: formData.get('country'),
       gender: formData.get('gender'),
-      img: formData.get('img') as File | null,
+      img: fileRef.current?.files?.[0] ?? null,
     };
 
     const result = formSchema(countries).safeParse(data);
@@ -118,12 +119,11 @@ const UncontrolledForms = (props: MyFormProps) => {
         error={errors.confirmPassword}
       />
       <GenderPicker id={'gender'} error={errors.gender} />
-      <Input
+      <InputFile
         id="img"
-        type="file"
+        ref={fileRef}
         label="Select file"
         error={errors.img}
-        accept="image/png,image/jpeg"
       />
       <CountryInput error={errors.country} />
       <Input

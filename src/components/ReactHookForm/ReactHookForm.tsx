@@ -51,7 +51,7 @@ const ReactHookForm = ({ onClose }: MyFormProps) => {
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <h2> Uncontrolled forms</h2>
+      <h2> React Hook forms</h2>
       <Input
         placeholder="Name"
         id="name"
