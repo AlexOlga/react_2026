@@ -6,7 +6,7 @@ const mockUser = {
   email: 'qw@qw.qw',
   gender: 'Mail',
   country: 'France',
-  img:null,
+  img: null,
   isNew: true,
 };
 

@@ -4,7 +4,7 @@ type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   id: string;
   label: string;
   error?: string;
-  placeholder?: string; 
+  placeholder?: string;
   type: string;
   onChange?: ChangeEventHandler;
 };
@@ -15,7 +15,7 @@ const Input = ({
   error,
   placeholder,
   type,
-  onChange, 
+  onChange,
   ...props
 }: InputProps) => {
   return (
@@ -30,7 +30,7 @@ const Input = ({
         placeholder={placeholder}
         type={type}
         className="border-solid rounded-xs outline-none bg-cyan-50"
-        onChange={onChange}       
+        onChange={onChange}
         {...props}
       />
 

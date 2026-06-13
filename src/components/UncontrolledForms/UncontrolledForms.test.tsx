@@ -1,4 +1,4 @@
-import {  render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, test, expect, vi } from 'vitest';
 
@@ -51,21 +51,13 @@ describe('UncontrolledForms', () => {
     await user.click(screen.getByLabelText(/terms/i));
     await user.type(screen.getByLabelText(/^password$/i), 'Password123!');
     await user.type(screen.getByLabelText(/confirm password/i), 'Password123!');
-    await user.selectOptions(screen.getByLabelText(/gender/i), 'Male');
-   //
+    await user.selectOptions(screen.getByLabelText(/gender/i), 'Male');   
     const file = new File(['image-content'], '../../assets/images.png', {
       type: 'image/png',
     });
     await user.upload(screen.getByLabelText(/select file/i), file);
-    //
-
     await user.type(screen.getByLabelText(/country/i), 'France');
-    await user.click(submitButton);
-    
-    await waitFor(() => {
-  screen.debug();
-});
+    await user.click(submitButton); 
     expect(useForms.getState().users).toHaveLength(1);
-   
   });
 });
