@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { describe, test, expect, vi } from 'vitest';
 import { MemoryRouter } from 'react-router';
 import App from './App';
-import useLocalStorage from './hooks/useLocalStorage';
+import useLocalStorage from '../pokemon-next/hooks/useLocalStorage';
 import {
   mockPokemon,
   mockPokemonData,

@@ -1,6 +1,6 @@
 import { Link } from 'react-router';
-import { pageStyles } from '../../shared/styles/page';
-import { NotFoundPage } from '../../shared/text';
+import { pageStyles } from '../../../pokemon-next/shared/styles/page';
+import { NotFoundPage } from '../../../pokemon-next/shared/text';
 
 const NotFound = () => {
   return (

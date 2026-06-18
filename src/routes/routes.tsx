@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router';
 import About from '../pages/About';
 import Home from '../pages/Home';
 import NotFound from '../pages/NotFound';
-import CardDetails from '../components/CardDetails';
+import CardDetails from '../../pokemon-next/app/components/CardDetails';
 
 const AppRoutes = () => {
   return (

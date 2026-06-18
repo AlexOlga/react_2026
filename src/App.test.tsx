@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import { describe, test, expect, vi, beforeEach } from 'vitest';
 import { MemoryRouter } from 'react-router';
-import { aboutPage, cardDetailsText, NotFoundPage } from './shared/text';
+import { aboutPage, cardDetailsText, NotFoundPage } from '../pokemon-next/shared/text';
 import App from './App';
-import useLocalStorage from './hooks/useLocalStorage';
+import useLocalStorage from '../pokemon-next/hooks/useLocalStorage';
 import {
   mockPokemon,
   mockPokemonData,

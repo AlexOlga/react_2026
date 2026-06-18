@@ -1,5 +1,5 @@
-import { errorMessagesMap } from '../constants/global';
-import { errorMessages } from '../shared/text';
+import { errorMessagesMap } from '../../pokemon-next/constants/global';
+import { errorMessages } from '../../pokemon-next/shared/text';
 
 async function baseFetch<T>(url: string): Promise<T> {
   try {

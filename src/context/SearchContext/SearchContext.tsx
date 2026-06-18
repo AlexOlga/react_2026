@@ -1,6 +1,7 @@
+'use client'
 import { createContext, type ReactNode } from 'react';
-import { LOCAL_QUERY } from '../../constants/global';
-import useLocalStorage from '../../hooks/useLocalStorage';
+import { LOCAL_QUERY } from '../../../pokemon-next/constants/global';
+import useLocalStorage from '../../../pokemon-next/hooks/useLocalStorage';
 type SearchContextType = {
   searchQuery: string;
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;

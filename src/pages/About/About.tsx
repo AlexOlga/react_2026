@@ -1,5 +1,5 @@
-import { pageStyles } from '../../shared/styles/page';
-import { aboutPage } from '../../shared/text';
+import { pageStyles } from '../../../pokemon-next/shared/styles/page';
+import { aboutPage } from '../../../pokemon-next/shared/text';
 
 const About = () => {
   return (

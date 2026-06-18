@@ -1,16 +1,16 @@
 import { useEffect } from 'react';
 import { Outlet, useNavigate, useSearchParams } from 'react-router';
-import BuggyButton from '../../components/BuggyButton/BuggyButton';
+import BuggyButton from '../../../pokemon-next/app/components/BuggyButton/BuggyButton';
 import { PAGE_LIMIT } from '../../constants/global';
-import CardList from '../../components/CardList';
-import Loading from '../../components/Loading';
-import ErrorAlert from '../../components/ErrorAlert';
-import Pagination from '../../components/Pagination';
+import CardList from '../../../pokemon-next/app/components/CardList';
+import Loading from '../../../pokemon-next/app/components/Loading';
+import ErrorAlert from '../../../pokemon-next/app/components/ErrorAlert';
+import Pagination from '../../../pokemon-next/app/components/Pagination';
 import { useSearch } from '../../context/SearchContext/useSearch';
-import Flyout from '../../components/Flyout';
+import Flyout from '../../../pokemon-next/app/components/Flyout';
 import { usePokemons } from '../../hooks/usePokemons';
 import { useSearchPokemon } from '../../hooks/useSearchPokemon';
-import RefreshButton from '../../components/RefreshButton';
+import RefreshButton from '../../../pokemon-next/app/components/RefreshButton';
 
 const Home = () => {
   const [searchParams] = useSearchParams();
