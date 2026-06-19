@@ -1,11 +1,11 @@
 import { describe, expect, test, vi } from 'vitest';
 import Flyout from './Flyout';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { useFavorites } from '../../../src/store/storeFavorites';
+import { useFavorites } from '../../store/storeFavorites';
 import userEvent from '@testing-library/user-event';
-import { downloadData } from '../../../src/utils/downloadData';
-import { getPokemonsData } from '../../../src/utils/getPokemons';
-import { createCSVContext } from '../../../src/utils/createCSVContext';
+import { downloadData } from '../../utils/downloadData';
+import { getPokemonsData } from '../../utils/getPokemons';
+import { createCSVContext } from '../../utils/createCSVContext';
 import { mockPokemon } from '../../../src/__mocks__/mocks';
 vi.mock('../../utils/getPokemons', () => ({
   getPokemonsData: vi.fn(),

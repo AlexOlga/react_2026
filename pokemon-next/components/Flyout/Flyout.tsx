@@ -1,9 +1,9 @@
 import queryClient from '../../../src/client';
-import { pokemonDetailsOptions } from '../../../src/hooks/usePokemonDetails';
+import { pokemonDetailsOptions } from '../../hooks/usePokemonDetails';
 import { buttonStyles } from '../../shared/styles/button';
-import { useFavorites } from '../../../src/store/storeFavorites';
-import { createCSVContext } from '../../../src/utils/createCSVContext';
-import { downloadData } from '../../../src/utils/downloadData';
+import { useFavorites } from '../../store/storeFavorites';
+import { createCSVContext } from '../../utils/createCSVContext';
+import { downloadData } from '../../utils/downloadData';
 
 const Flyout = () => {
   const allFavorites = useFavorites((state) => state.totalFavorite());

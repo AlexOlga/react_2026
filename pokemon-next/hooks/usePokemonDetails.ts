@@ -11,11 +11,4 @@ export function usePokemonDetails(id?: string) {
     enabled: !!id,
   });
 }
-/*export function usePokemonDetails(id?: string) {
-  return useQuery({
-    queryKey: ['pokemon',  'detail', id],
-    queryFn: () => getPokemonById(id!),
-    enabled: !!id,
-  });
-}
-*/
+

@@ -1,5 +1,5 @@
-import { URL_API } from '../constants/global';
-import type { Pokemon } from '../types/pokemon';
+import { URL_API } from '../../constants/global';
+import type { Pokemon } from '../../types/pokemon';
 import baseFetch from './baseFetch';
 
 async function getPokemonByName(name: string): Promise<Pokemon[]> {

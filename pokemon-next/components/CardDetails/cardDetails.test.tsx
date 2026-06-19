@@ -2,10 +2,10 @@ import { describe, test, expect, vi } from 'vitest';
 import { mockPokemon } from '../../../src/__mocks__/mocks';
 import CardDetails from './CardDetails';
 import { render, screen } from '@testing-library/react';
-import { usePokemonDetails } from '../../../src/hooks/usePokemonDetails';
+import { usePokemonDetails } from '../../hooks/usePokemonDetails';
 import userEvent from '@testing-library/user-event';
 import type { UseQueryResult } from '@tanstack/react-query';
-import type { Pokemon } from '../../../src/types/pokemon';
+import type { Pokemon } from '../../types/pokemon';
 const { useParams, useSearchParams, useNavigate } =
   await import('react-router');
 vi.mock('react-router', async () => {

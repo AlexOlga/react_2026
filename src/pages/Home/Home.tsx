@@ -8,8 +8,8 @@ import ErrorAlert from '../../../pokemon-next/app/components/ErrorAlert';
 import Pagination from '../../../pokemon-next/app/components/Pagination';
 import { useSearch } from '../../context/SearchContext/useSearch';
 import Flyout from '../../../pokemon-next/app/components/Flyout';
-import { usePokemons } from '../../hooks/usePokemons';
-import { useSearchPokemon } from '../../hooks/useSearchPokemon';
+import { usePokemons } from '../../../pokemon-next/hooks/usePokemons';
+import { useSearchPokemon } from '../../../pokemon-next/hooks/useSearchPokemon';
 import RefreshButton from '../../../pokemon-next/app/components/RefreshButton';
 
 const Home = () => {

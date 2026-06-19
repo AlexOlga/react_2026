@@ -9,11 +9,11 @@ import { MemoryRouter } from 'react-router';
 import { mockPokemon, mockPokemonData } from '../../__mocks__/mocks';
 import { TEXTS } from '../../../pokemon-next/shared/text';
 import ErrorBoundary from '../../../pokemon-next/app/components/ErrorBoundary';
-import { usePokemons } from '../../hooks/usePokemons';
-import { useSearchPokemon } from '../../hooks/useSearchPokemon';
+import { usePokemons } from '../../../pokemon-next/hooks/usePokemons';
+import { useSearchPokemon } from '../../../pokemon-next/hooks/useSearchPokemon';
 import { type UseQueryResult } from '@tanstack/react-query';
-import type { Pokemon } from '../../types/pokemon';
-import type { ApiResponse } from '../../types/api';
+import type { Pokemon } from '../../../pokemon-next/types/pokemon';
+import type { ApiResponse } from '../../../pokemon-next/types/api';
 
 vi.mock('../../hooks/usePokemons', () => ({
   usePokemons: vi.fn(),

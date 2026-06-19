@@ -10,12 +10,12 @@ import {
   mockPokemonList,
 } from './__mocks__/mocks';
 import userEvent from '@testing-library/user-event';
-import { usePokemons } from './hooks/usePokemons';
-import { useSearchPokemon } from './hooks/useSearchPokemon';
+import { usePokemons } from '../pokemon-next/hooks/usePokemons';
+import { useSearchPokemon } from '../pokemon-next/hooks/useSearchPokemon';
 
-import type { Pokemon } from './types/pokemon';
-import type { ApiResponse } from './types/api';
-import { usePokemonDetails } from './hooks/usePokemonDetails';
+import type { Pokemon } from '../pokemon-next/types/pokemon';
+import type { ApiResponse } from '../pokemon-next/types/api';
+import { usePokemonDetails } from '../pokemon-next/hooks/usePokemonDetails';
 import type { UseQueryResult } from '@tanstack/react-query';
 
 vi.mock('./hooks/useLocalStorage', () => {

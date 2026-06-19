@@ -1,16 +1,22 @@
-import { useNavigate, useParams, useSearchParams } from 'react-router';
+//import { useNavigate, useParams, useSearchParams } from 'react-router';
 import Loading from '../Loading/Loading';
 import { placeholderURL } from '../../constants/global';
 import { cardDetailsText } from '../../shared/text';
 import ErrorAlert from '../ErrorAlert/ErrorAlert';
 import { buttonStyles } from '../../shared/styles/button';
 import { cardDetailsStyles } from './cardDetails.styles';
-import { usePokemonDetails } from '../../../src/hooks/usePokemonDetails';
-import Image from 'next/image' ;
-const CardDetails = () => {
-  const [searchParams] = useSearchParams();
-  const { cardId } = useParams();
-  const navigate = useNavigate();
+import { usePokemonDetails } from '../../hooks/usePokemonDetails';
+import Image from 'next/image';
+import { useRouter, useSearchParams } from 'next/navigation';
+type CardDetailsProps = {
+  cardId: string;
+};
+const CardDetails = ({ cardId }: CardDetailsProps) => {
+  //const [searchParams] = useSearchParams();
+  // const { cardId } = useParams();
+  // const navigate = useNavigate();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const pokemonDetails = usePokemonDetails(cardId);
   if (pokemonDetails.isLoading)
     return (
@@ -22,10 +28,11 @@ const CardDetails = () => {
     return <ErrorAlert message={pokemonDetails.error.message} />;
   if (!pokemonDetails.data) return null;
 
-  const pokemon = pokemonDetails.data;
   const page = searchParams.get('page');
+  const pokemon = pokemonDetails.data;
+
   const onClose = () => {
-    navigate(`/?page=${page}`);
+    router.push(`/?page=${page}`);
   };
 
   const imgURL = pokemon.sprites?.front_default
@@ -41,14 +48,11 @@ const CardDetails = () => {
       </div>
 
       <div className="flex justify-center mb-6">
-        <Image src={imgURL}
-          alt={pokemon.name}
-          className={cardDetailsStyles.image}/>
-      {/* <img
+        <Image
           src={imgURL}
           alt={pokemon.name}
           className={cardDetailsStyles.image}
-        /> */} 
+        />   
       </div>
 
       <div className="space-y-6">

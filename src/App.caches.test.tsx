@@ -10,8 +10,8 @@ import {
 } from './__mocks__/mocks';
 import userEvent from '@testing-library/user-event';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import getPokemonById from './utils/getPokemonById';
-import getPokemons from './utils/getPokemons';
+import getPokemonById from '../pokemon-next/utils/getPokemonById';
+import getPokemons from '../pokemon-next/utils/getPokemons';
 
 vi.mock('./utils/getPokemons');
 vi.mock('./utils/getPokemonById');

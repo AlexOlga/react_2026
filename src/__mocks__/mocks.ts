@@ -1,4 +1,4 @@
-import type { Pokemon } from '../types/pokemon';
+import type { Pokemon } from '../../pokemon-next/types/pokemon';
 
 export const mockPokemon: Pokemon = {
   id: 1,

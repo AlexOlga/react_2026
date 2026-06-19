@@ -1,14 +1,18 @@
+'use client';
 import Card from '../Card';
-import type { Pokemon } from '../../../src/types/pokemon';
+import type { Pokemon } from '../../types/pokemon';
 import { errorMessages } from '../../shared/text';
-import { Link, useSearchParams } from 'react-router';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 
 type Props = {
   list: Pokemon[];
 };
 
 const CardList = ({ list }: Props) => {
-  const [searchParams] = useSearchParams();
+  // const [searchParams] = useSearchParams();
+  // const currentPage = Number(searchParams.get('page')) || 1;
+  const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get('page')) || 1;
   return (
     <>
@@ -18,7 +22,15 @@ const CardList = ({ list }: Props) => {
         <ul className="flex gap-4 item-center justify-center flex-wrap p-4 m-0 list-none">
           {list.map((item) => (
             <li key={item.id}>
-              <Link to={`/details/${item.id}?page=${currentPage}`}>
+              <Link
+                href={{
+                  pathname: '/',
+                  query: {
+                    cardId: item.id,
+                    page: currentPage,
+                  },
+                }}
+              >
                 <Card {...item} />
               </Link>
             </li>

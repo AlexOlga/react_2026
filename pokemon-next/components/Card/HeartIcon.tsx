@@ -1,3 +1,4 @@
+'use client';
 export const HeartIcon = ({ filled }: { filled: boolean }) => (
   <svg
     viewBox="0 0 24 24"

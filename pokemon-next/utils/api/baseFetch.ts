@@ -1,9 +1,13 @@
-import { errorMessagesMap } from '../../pokemon-next/constants/global';
-import { errorMessages } from '../../pokemon-next/shared/text';
+import { errorMessagesMap } from '../../constants/global';
+import { errorMessages } from '../../shared/text';
 
 async function baseFetch<T>(url: string): Promise<T> {
   try {
-    const res = await fetch(url);
+    const res = await fetch(url, {
+      next: {
+        revalidate: 180,
+      },
+    });
 
     if (!res.ok) {
       throw new Error(errorMessagesMap[res.status] || errorMessages.other);

@@ -1,5 +1,5 @@
 import { QueryClient } from '@tanstack/react-query';
-import { CACHE_TTL } from '../pokemon-next/constants/global';
+import { CACHE_TTL } from './constants/global';
 
 const queryClient = new QueryClient({
   defaultOptions: {
