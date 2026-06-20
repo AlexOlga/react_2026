@@ -1,43 +1,33 @@
-'use client'
-import { TEXTS } from '../../shared/text';
-import { buttonStyles } from '../../shared/styles/button';
-import { inputStyles } from '../../shared/styles/input';
-import { useSearch } from '../../context/SearchContext/useSearch';
-// import { useNavigate } from 'react-router';
-import { useState } from 'react';
+'use server'
+import { TEXTS } from "@/shared/text";
+import { searchAction } from "./actions";
+import { inputStyles } from "@/shared/styles/input";
+import { buttonStyles } from "@/shared/styles/button";
 
-const Search = () => {
-  const { searchQuery, setSearchQuery } = useSearch();
-  const [query, setQuery] = useState(searchQuery);
- // const navigate = useNavigate();
-  const changeQuery = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const trimmed = event.target?.value;
-    setQuery(trimmed);
+interface SearchProps {  
+    query: string;    
   };
-  const handleSearch = () => {
-    const trimmed = query.trim();
-    if (trimmed !== searchQuery) {
-      setSearchQuery(trimmed);
-    }
-   // navigate(`/?page=1`);
-  };
+
+const Search = async ({
+  query
+}: SearchProps) => {
   return (
     <div className="rounded-xl p-4  w-xl">
-      <div className="flex gap-3">
+      <form className="flex gap-3" action={searchAction}>
         <input
           type="text"
           placeholder={TEXTS.search.placeholder}
           className={inputStyles.search}
-          onChange={changeQuery}
-          value={query}
+          name="query"
+          defaultValue={query}
         />
         <button
           className={`${buttonStyles.base} ${buttonStyles.yellow}`}
-          onClick={handleSearch}
+         type='submit'
         >
           {TEXTS.search.button}
         </button>
-      </div>
+      </form>
     </div>
   );
 };

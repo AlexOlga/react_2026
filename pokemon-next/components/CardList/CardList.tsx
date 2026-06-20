@@ -1,19 +1,13 @@
-'use client';
 import Card from '../Card';
 import type { Pokemon } from '../../types/pokemon';
 import { errorMessages } from '../../shared/text';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
 
 type Props = {
   list: Pokemon[];
+  currentPage: number;
 };
-
-const CardList = ({ list }: Props) => {
-  // const [searchParams] = useSearchParams();
-  // const currentPage = Number(searchParams.get('page')) || 1;
-  const searchParams = useSearchParams();
-  const currentPage = Number(searchParams.get('page')) || 1;
+const CardList = ({ list, currentPage }: Props) => {
   return (
     <>
       {list.length === 0 ? (

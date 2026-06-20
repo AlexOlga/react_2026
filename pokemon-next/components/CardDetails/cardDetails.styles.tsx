@@ -1,6 +1,6 @@
 export const cardDetailsStyles = {
   aside:
-    'sticky top-0 p-6 border-l border-yellow-400 bg-white h-screen overflow-auto w-80 dark:bg-zinc-900',
+    'sticky top-0 p-6 border-l border-yellow-400 bg-white h-screen overflow-auto w-80 dark:bg-zinc-900 shrink-0',
   header: 'flex justify-between items-center mb-6',
   title: 'text-4xl font-bold capitalize text-red-400',
   image: 'w-64 h-64 object-contain',

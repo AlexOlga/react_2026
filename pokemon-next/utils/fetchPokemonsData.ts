@@ -3,6 +3,7 @@ import getPokemons from "./api/getPokemons";
 import getPokemonByName from "./api/getPokemonByName";
 
 export async function fetchPokemonsData (query: string, page: number){
+    console.log('featch', query, page)
   if (query === '') {
     const data =  await getPokemons(PAGE_LIMIT, page);   
      const totalPages = Math.ceil(data.count / PAGE_LIMIT)

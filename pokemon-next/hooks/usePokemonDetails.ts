@@ -1,5 +1,6 @@
+import getPokemonById from '@/utils/api/getPokemonById';
 import { useQuery } from '@tanstack/react-query';
-import getPokemonById from '../utils/getPokemonById';
+
 
 export const pokemonDetailsOptions = (id: string) => ({
   queryKey: ['pokemon', 'detail', id],
