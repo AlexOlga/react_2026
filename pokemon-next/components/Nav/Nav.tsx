@@ -1,25 +1,23 @@
 'use client';
-import { navTexts } from '../../shared/text';
 import { navStyles } from '../../shared/styles/nav';
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-// import { NavLink, useLocation, type NavLinkRenderProps } from 'react-router';
+import { Link } from '@/i18n/navigation';
+import { useTranslations } from 'next-intl';
 
-const Nav = () => {
-  // const location = useLocation();
+const Nav = () => {  
   const pathname = usePathname();
-
+ const t = useTranslations('nav');
   return (
     <nav className={navStyles.base}>
       <Link
-        href="/t"
+        href="/"
         className={
-          pathname === '/' || pathname.startsWith('/details')
+            pathname === '/' || pathname === '/en' || pathname === '/ru' || pathname.startsWith('/details')
             ? navStyles.active
             : navStyles.inactive
         }
       >
-        {navTexts.home}
+        {t('home')}
       </Link>
       <Link
         href="/about"
@@ -27,7 +25,7 @@ const Nav = () => {
           pathname === '/about' ? navStyles.active : navStyles.inactive
         }
       >
-        {navTexts.about}
+        {t('about')}
       </Link>
     </nav>
   );

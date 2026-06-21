@@ -1,6 +1,7 @@
-import Link from 'next/link';
-import { pageStyles } from '../../shared/styles/page';
-import { aboutPage } from '../../shared/text';
+import { Link } from "@/i18n/navigation";
+import { pageStyles } from "@/shared/styles/page";
+import { aboutPage } from "@/shared/text";
+
 
 const About = () => {
   return (

@@ -1,0 +1,22 @@
+{
+    "search": {
+    "placeholder": "Search Pokémon...",
+    "button": "Search"
+  },
+  "not found": {
+  "text": "Page not found.",
+  "link": "Back"
+},
+ "nav": {
+  "home": "Home",
+  "about": "About"
+},
+"card details" : {
+  "general": "General",
+  "types": "Types",
+  "abilities": "Abilities",
+  "height": "Height",
+  "weight": "Weigh",
+  "baseExperience": "Base experience" 
+}
+}

@@ -1,0 +1,22 @@
+{
+  "search": {
+    "placeholder": "Поиск покемона ...",
+    "button": "Поиск"
+  },
+  "not found": {
+    "text": "Страница не найдена",
+    "link": "Назад"
+  },
+   "nav": {
+  "home": "Главная",
+  "about": "О нас"
+},
+"card details" : {
+  "general": "Общие",
+  "types": "Типы",
+  "abilities": "Способности",
+  "height": "Рост",
+  "weight": "Вес",
+  "baseExperience": "Базовый опыт" 
+}
+}

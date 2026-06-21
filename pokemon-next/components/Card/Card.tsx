@@ -6,6 +6,7 @@ import { Pokemon } from '@/types/pokemon';
 import Image from 'next/image' ;
 import { cardStyles } from './card.styles';
 import { HeartIcon } from './HeartIcon';
+import { useTranslations } from 'next-intl';
 const Card = (data: Pokemon) => {
   const imgURL = data.sprites?.front_default
     ? data.sprites.front_default
@@ -17,6 +18,7 @@ const Card = (data: Pokemon) => {
     event.preventDefault();
     toggleFavorite(data.id);
   };
+   const t = useTranslations("card details");
   return (
     <div className={cardStyles.card}>
       <div>
@@ -27,7 +29,7 @@ const Card = (data: Pokemon) => {
       <Image src={imgURL} alt={data.name} width={140} height={140} className={cardStyles.img}/>    
       <h3 className={cardStyles.title}>{data.name}</h3>
       <p className={cardStyles.text}>
-        <span>Base experience: </span>
+        <span>{t('baseExperience')}</span>
         {data.base_experience}
       </p>
     </div>

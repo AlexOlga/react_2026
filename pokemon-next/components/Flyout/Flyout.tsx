@@ -1,11 +1,7 @@
-"use client"
-//import queryClient from "@/client";
-//import { pokemonDetailsOptions } from "@/hooks/usePokemonDetails";
-import { buttonStyles } from "@/shared/styles/button";
-import { useFavorites } from "@/store/storeFavorites";
-//import { createCSVContext } from "@/utils/createCSVContext";
-import { downloadData } from "@/utils/downloadData";
-
+'use client';
+import { buttonStyles } from '@/shared/styles/button';
+import { useFavorites } from '@/store/storeFavorites';
+import { downloadData } from '@/utils/downloadData';
 
 const Flyout = () => {
   const allFavorites = useFavorites((state) => state.totalFavorite());
@@ -13,28 +9,19 @@ const Flyout = () => {
   const favorites = useFavorites((state) => state.favorites);
 
   const download = async () => {
-    /*const data = await Promise.all(
-      favorites.map((id) =>
-        queryClient.fetchQuery(pokemonDetailsOptions(String(id)))
-      )
-    );
-    const csvContent = createCSVContext(data);
-    const blob = new Blob([csvContent], {
-      type: 'text/csv;charset=utf-8;',
-    });*/
-      const response = await fetch('/api/export', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      ids: favorites,
-    }),
-  });
+    const response = await fetch('/api/export', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        ids: favorites,
+      }),
+    });
 
-  const blob = await response.blob();
+    const blob = await response.blob();
 
-   downloadData(blob, `${allFavorites}_items.csv`);
+    downloadData(blob, `${allFavorites}_items.csv`);
   };
   if (allFavorites === 0) return;
   return (

@@ -1,15 +1,15 @@
-
 import { placeholderURL } from '../../constants/global';
-import { cardDetailsText } from '../../shared/text';
 import { cardDetailsStyles } from './cardDetails.styles';
 import Image from 'next/image';
 import getPokemonById from '@/utils/api/getPokemonById';
 import { CloseButton } from './ButtonClose';
+import { getTranslations } from 'next-intl/server';
 type CardDetailsProps = {
   cardId: string;
 };
 const CardDetails = async ({ cardId }: CardDetailsProps) => {
-   const pokemon = await getPokemonById(cardId);
+  const t = await getTranslations('card details');
+  const pokemon = await getPokemonById(cardId);
   if (!pokemon) return null;
   const imgURL = pokemon.sprites?.front_default
     ? pokemon.sprites.front_default
@@ -17,8 +17,8 @@ const CardDetails = async ({ cardId }: CardDetailsProps) => {
   return (
     <aside className={cardDetailsStyles.aside}>
       <div className={cardDetailsStyles.header}>
-        <h2 className={cardDetailsStyles.title}>{pokemon.name}</h2>      
-        <CloseButton/>
+        <h2 className={cardDetailsStyles.title}>{pokemon.name}</h2>
+        <CloseButton />
       </div>
 
       <div className="flex justify-center mb-6">
@@ -28,30 +28,24 @@ const CardDetails = async ({ cardId }: CardDetailsProps) => {
           className={cardDetailsStyles.image}
           width={80}
           height={80}
-        />   
+        />
       </div>
       <div className="space-y-6 ">
         <section>
-          <h3 className={cardDetailsStyles.sectionTitle}>
-            {cardDetailsText.general}
-          </h3>
+          <h3 className={cardDetailsStyles.sectionTitle}>{t('general')}</h3>
           <div className="space-y-1">
             <p>
-              <span className={cardDetailsStyles.textBold}>
-                {cardDetailsText.height}
-              </span>
+              <span className={cardDetailsStyles.textBold}>{t('height')}</span>
               {pokemon.height}
             </p>
 
             <p>
-              <span className={cardDetailsStyles.textBold}>
-                {cardDetailsText.weight}
-              </span>
+              <span className={cardDetailsStyles.textBold}>{t('weight')}</span>
               {pokemon.weight}
             </p>
             <p>
               <span className={cardDetailsStyles.textBold}>
-                {cardDetailsText.baseExperience}
+                {t('baseExperience')}
               </span>
               {pokemon.base_experience}
             </p>
@@ -59,9 +53,7 @@ const CardDetails = async ({ cardId }: CardDetailsProps) => {
         </section>
 
         <section>
-          <h3 className={cardDetailsStyles.sectionTitle}>
-            {cardDetailsText.types}
-          </h3>
+          <h3 className={cardDetailsStyles.sectionTitle}>{t('types')}</h3>
           <div className={cardDetailsStyles.typeContainer}>
             {pokemon.types.map((type) => (
               <span key={type.slot} className={cardDetailsStyles.typeBadge}>
@@ -72,9 +64,7 @@ const CardDetails = async ({ cardId }: CardDetailsProps) => {
         </section>
 
         <section>
-          <h3 className={cardDetailsStyles.sectionTitle}>
-            {cardDetailsText.abilities}
-          </h3>
+          <h3 className={cardDetailsStyles.sectionTitle}>{t('abilities')}</h3>
 
           <ul className={cardDetailsStyles.list}>
             {pokemon.abilities.map((ability) => (
