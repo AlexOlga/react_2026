@@ -2,13 +2,15 @@
 import { buttonStyles } from '@/shared/styles/button';
 import { useFavorites } from '@/store/storeFavorites';
 import { downloadData } from '@/utils/downloadData';
+import { useTranslations } from 'next-intl';
 
 const Flyout = () => {
   const allFavorites = useFavorites((state) => state.totalFavorite());
   const removeAllFavorite = useFavorites((state) => state.removeAllFavorite);
   const favorites = useFavorites((state) => state.favorites);
-
+ const t = useTranslations('flyout');
   const download = async () => {
+    
     const response = await fetch('/api/export', {
       method: 'POST',
       headers: {
@@ -34,13 +36,13 @@ const Flyout = () => {
           className={`${buttonStyles.base} ${buttonStyles.yellow}`}
           onClick={removeAllFavorite}
         >
-          Unselect all
+         {t('unselect')}
         </button>
         <button
           className={`${buttonStyles.base} ${buttonStyles.yellow}`}
           onClick={download}
         >
-          Download
+          {t('download')}
         </button>
       </div>
     </div>

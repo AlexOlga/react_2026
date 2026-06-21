@@ -4,15 +4,18 @@ import { usePathname } from 'next/navigation';
 import { Link } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 
-const Nav = () => {  
+const Nav = () => {
   const pathname = usePathname();
- const t = useTranslations('nav');
+  const t = useTranslations('nav');
   return (
     <nav className={navStyles.base}>
       <Link
         href="/"
         className={
-            pathname === '/' || pathname === '/en' || pathname === '/ru' || pathname.startsWith('/details')
+          pathname === '/' ||
+          pathname === '/en' ||
+          pathname === '/ru' ||
+          pathname.startsWith('/details')
             ? navStyles.active
             : navStyles.inactive
         }

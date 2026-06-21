@@ -1,24 +1,18 @@
 'use client';
-import { useRouter } from 'next/navigation';
+import { useRouter} from '@/i18n/navigation';
 import { buttonStyles } from '../../shared/styles/button';
 import type { PropsPagination } from './pagination.types';
 import { useSearchParams } from 'next/navigation';
 
-const Pagination = ({
-  currentPage,
-  totalPages  
-}: PropsPagination) => {
- 
+const Pagination = ({ currentPage, totalPages }: PropsPagination) => {
+  const router = useRouter(); 
+  const searchParams = useSearchParams();
 
-const router = useRouter();
-const searchParams = useSearchParams();
-
-const onPageChange = (page: number) => {
-  const params = new URLSearchParams(searchParams.toString());
-  params.set('page', String(page));
-  router.push(`?${params.toString()}`);
+const onPageChange = (page: number) => { 
+  const params = new URLSearchParams(searchParams.toString()); 
+  params.set('page', String(page)); 
+  router.push(`?${params.toString()}`); 
 };
-
   return (
     <div className="flex justify-center  items-center gap-x-8">
       <button

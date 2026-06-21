@@ -11,7 +11,7 @@ interface SearchProps {
 const Search = async ({
   query
 }: SearchProps) => {
-  const t = await getTranslations('search');
+  const t = await getTranslations("search");
   return (
     <div className="rounded-xl p-4  w-xl">
       <form className="flex gap-3" action={searchAction}>

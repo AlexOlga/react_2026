@@ -1,22 +1,36 @@
 {
-    "search": {
+  "search": {
     "placeholder": "Search Pokémon...",
     "button": "Search"
   },
   "not found": {
-  "text": "Page not found.",
-  "link": "Back"
+    "text": "Page not found.",
+    "link": "Back"
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About"
+  },
+  "card details": {
+    "general": "General ",
+    "types": "Types ",
+    "abilities": "Abilities ",
+    "height": "Height ",
+    "weight": "Weigh ",
+    "baseExperience": "Base experience "
+  },
+  "about":{   
+  "title": "About This Project",
+  "linkText": " RS School React Course ",
+  "linkUrl": "https://rs.school/courses/reactjs",
+  "text1": "This project was created by Aleksandrova Olga as part of the ",
+  "text2":    "The main goal of this work was to practice modern React features, routing, and TypeScript."
 },
- "nav": {
-  "home": "Home",
-  "about": "About"
-},
-"card details" : {
-  "general": "General",
-  "types": "Types",
-  "abilities": "Abilities",
-  "height": "Height",
-  "weight": "Weigh",
-  "baseExperience": "Base experience" 
+"flyout":{
+  "unselect":"Unselect all",
+  "download": "Download",
+  "selected":"selected items"
 }
-}
+  
+  }
+

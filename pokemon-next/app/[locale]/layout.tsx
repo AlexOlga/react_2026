@@ -25,8 +25,8 @@ export default async function LocaleLayout({
    const messages = await getMessages({locale});
   return (
     <html lang={locale}>
-      <body>
-        <NextIntlClientProvider messages={messages}>
+      <body className='dark:bg-zinc-900'>
+        <NextIntlClientProvider locale={locale} messages={messages}>
            <SearchProvider>
           <ThemeProvider>
             <Header />
