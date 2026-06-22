@@ -1,3 +1,4 @@
+'use client';
 import { TEXTS } from '../../shared/text';
 import { buttonStyles } from '../../shared/styles/button';
 import { useState } from 'react';
