@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import { PAGE_LIMIT } from '../constants/global';
-import getPokemons from '../utils/getPokemons';
-import queryClient from '../client';
+import getPokemons from '@/utils/api/getPokemons';
+import { PAGE_LIMIT } from '@/constants/global';
+import queryClient from '@/client';
 
 export function usePokemons(page: number) {
   return useQuery({

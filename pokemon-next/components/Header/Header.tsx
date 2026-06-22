@@ -1,4 +1,3 @@
-import BuggyButton from '../BuggyButton/BuggyButton';
 import LocaleSwitcher from '../LocaleSwitcher/LocalSwitcher';
 import Nav from '../Nav';
 import ThemeSwitcher from '../ThemeSwitcher';
