@@ -13,7 +13,7 @@ interface PageProps {
   }>;
 }
 
-export default async function HomePage({ searchParams }: PageProps) {  
+export default async function HomePage({ searchParams }: PageProps) {
   const params = await searchParams;
   const cardId = params.cardId;
   const page = Number(params.page ?? 1);
@@ -39,7 +39,7 @@ export default async function HomePage({ searchParams }: PageProps) {
         </div>
 
         {cardId && <CardDetails cardId={cardId} />}
-      </div>    
+      </div>
       <Flyout />
     </div>
   );

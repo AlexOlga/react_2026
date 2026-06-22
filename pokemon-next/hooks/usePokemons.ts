@@ -11,7 +11,7 @@ export function usePokemons(page: number) {
       data.results.forEach((pokemon) => {
         queryClient.setQueryData(
           ['pokemon', 'detail', String(pokemon.id)],
-          pokemon
+          pokemon,
         );
       });
       return data;

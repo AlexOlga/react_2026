@@ -1,1 +1,1 @@
-export {default} from './LocalSwitcher';
+export { default } from './LocalSwitcher';

@@ -18,4 +18,4 @@ export const errorMessages = {
   notFound: 'Pokemon not found',
   other: 'Something went wrong',
 };
-export const aboutPage= {linkUrl:"https://rs.school/courses/reactjs"}
+export const aboutPage = { linkUrl: 'https://rs.school/courses/reactjs' };

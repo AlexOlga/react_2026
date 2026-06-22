@@ -2,7 +2,10 @@ import { render, screen } from '@testing-library/react';
 import { describe, test, expect } from 'vitest';
 
 import CardList from './CardList';
-import { mockPokemonList, mockPokemonListEmpty } from '../../../src/__mocks__/mocks';
+import {
+  mockPokemonList,
+  mockPokemonListEmpty,
+} from '../../../src/__mocks__/mocks';
 import { MemoryRouter } from 'react-router';
 
 describe('CardList component', () => {
@@ -10,7 +13,7 @@ describe('CardList component', () => {
     render(
       <MemoryRouter initialEntries={['/?page=2']}>
         <CardList list={mockPokemonList} />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     const list = screen.getAllByRole('listitem');
@@ -20,7 +23,7 @@ describe('CardList component', () => {
     render(
       <MemoryRouter initialEntries={['/?page=2']}>
         <CardList list={mockPokemonList} />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
     expect(screen.getByText('pikachu')).toBeInTheDocument();
     expect(screen.getByText('clefairy')).toBeInTheDocument();
@@ -29,7 +32,7 @@ describe('CardList component', () => {
     render(
       <MemoryRouter>
         <CardList list={mockPokemonListEmpty} />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
     expect(screen.getByTestId('not-found')).toBeInTheDocument();
   });

@@ -14,5 +14,9 @@ export function CloseButton() {
     router.push(`?${params.toString()}`);
   };
 
-  return <button onClick={handleClose} className={buttonStyles.red}>✕</button>;
+  return (
+    <button onClick={handleClose} className={buttonStyles.red}>
+      ✕
+    </button>
+  );
 }

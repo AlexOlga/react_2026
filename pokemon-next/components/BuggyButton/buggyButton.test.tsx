@@ -11,7 +11,7 @@ describe('BuggyButton component', () => {
     expect(
       screen.getByRole('button', {
         name: TEXTS.buggy.button,
-      })
+      }),
     ).toBeInTheDocument();
   });
 

@@ -1,8 +1,7 @@
-import { API_QUERY, URL_API } from "@/constants/global";
-import baseFetch from "./baseFetch";
-import { ApiResponse } from "@/types/api";
-import { Pokemon } from "@/types/pokemon";
-
+import { API_QUERY, URL_API } from '@/constants/global';
+import baseFetch from './baseFetch';
+import { ApiResponse } from '@/types/api';
+import { Pokemon } from '@/types/pokemon';
 
 type PokemonUrl = {
   name: string;
@@ -11,31 +10,32 @@ type PokemonUrl = {
 
 async function getPokemonsUrl(
   limit: number,
-  offset: number
+  offset: number,
 ): Promise<ApiResponse<PokemonUrl>> {
+  console.log(URL_API, API_QUERY);
   const data: ApiResponse<PokemonUrl> = await baseFetch(
-    `${URL_API}${API_QUERY.offset}${offset}&${API_QUERY.limit}${limit}`
+    `${URL_API}${API_QUERY.offset}${offset}&${API_QUERY.limit}${limit}`,
   );
   return data;
 }
 
 export async function getPokemonsData(
-  pokemons: PokemonUrl[]
+  pokemons: PokemonUrl[],
 ): Promise<Pokemon[]> {
   const results = await Promise.allSettled(
-    pokemons.map((p) => baseFetch<Pokemon>(p.url))
+    pokemons.map((p) => baseFetch<Pokemon>(p.url)),
   );
 
   return results
     .filter(
-      (r): r is PromiseFulfilledResult<Pokemon> => r.status === 'fulfilled'
+      (r): r is PromiseFulfilledResult<Pokemon> => r.status === 'fulfilled',
     )
     .map((r) => r.value);
 }
 
 async function getPokemons(
   limit: number,
-  page: number
+  page: number,
 ): Promise<ApiResponse<Pokemon>> {
   const offset = limit * (page - 1);
   const res = await getPokemonsUrl(limit, offset);

@@ -8,7 +8,7 @@ export function createCSVContext(data: Pokemon[]) {
       item.name,
       item.base_experience,
       item.sprites?.front_default,
-    ].join(',')
+    ].join(','),
   );
   const result = header + '\n' + rows.join('\n');
   return result;

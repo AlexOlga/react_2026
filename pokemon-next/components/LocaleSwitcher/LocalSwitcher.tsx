@@ -17,13 +17,9 @@ export default function LocaleSwitcher() {
 
   return (
     <div className={switcherStyles.button}>
-     <Link
-      href={newPath}
-      locale={locale === 'en' ? 'ru' : 'en'}
-    >
-      {locale.toUpperCase()}
-    </Link>
+      <Link href={newPath} locale={locale === 'en' ? 'ru' : 'en'}>
+        {locale.toUpperCase()}
+      </Link>
     </div>
   );
 }
-

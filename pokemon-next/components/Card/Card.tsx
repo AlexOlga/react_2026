@@ -3,7 +3,7 @@
 import { placeholderURL } from '@/constants/global';
 import { useFavorites } from '@/store/storeFavorites';
 import { Pokemon } from '@/types/pokemon';
-import Image from 'next/image' ;
+import Image from 'next/image';
 import { cardStyles } from './card.styles';
 import { HeartIcon } from './HeartIcon';
 import { useTranslations } from 'next-intl';
@@ -18,7 +18,7 @@ const Card = (data: Pokemon) => {
     event.preventDefault();
     toggleFavorite(data.id);
   };
-   const t = useTranslations("card details");
+  const t = useTranslations('card details');
   return (
     <div className={cardStyles.card}>
       <div>
@@ -26,7 +26,13 @@ const Card = (data: Pokemon) => {
           <HeartIcon filled={isFavorite} />
         </button>
       </div>
-      <Image src={imgURL} alt={data.name} width={140} height={140} className={cardStyles.img}/>    
+      <Image
+        src={imgURL}
+        alt={data.name}
+        width={140}
+        height={140}
+        className={cardStyles.img}
+      />
       <h3 className={cardStyles.title}>{data.name}</h3>
       <p className={cardStyles.text}>
         <span>{t('baseExperience')}</span>

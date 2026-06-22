@@ -1,7 +1,6 @@
-import { URL_API } from "@/constants/global";
-import { Pokemon } from "@/types/pokemon";
-import baseFetch from "./baseFetch";
-
+import { URL_API } from '@/constants/global';
+import { Pokemon } from '@/types/pokemon';
+import baseFetch from './baseFetch';
 
 async function getPokemonById(id: string): Promise<Pokemon> {
   const data: Pokemon = await baseFetch(`${URL_API}${id}`);
