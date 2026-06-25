@@ -41,7 +41,9 @@ export default async function HomePage({ searchParams }: PageProps) {
 
         {cardId && <CardDetails cardId={cardId} />}
       </div>
-      <div className="flex justify-center p-4 "><BuggyButton/></div>
+      <div className="flex justify-center p-4 ">
+        <BuggyButton />
+      </div>
       <Flyout />
     </div>
   );

@@ -1,6 +1,6 @@
 'use client';
-
 import { buttonStyles } from '@/shared/styles/button';
+import { redirect } from 'next/navigation';
 
 type ErrorProps = {
   error: Error & { digest?: string };
@@ -13,7 +13,10 @@ export default function Error({ error, reset }: ErrorProps) {
       <p>{error.message}</p>
 
       <button
-        onClick={() => reset()}
+        onClick={() => {
+          reset();
+          redirect('/');
+        }}
         className={`${buttonStyles.base} ${buttonStyles.red}`}
       >
         Try again

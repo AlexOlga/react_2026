@@ -1,23 +1,26 @@
 'use client';
 import { navStyles } from '../../shared/styles/nav';
-import { usePathname } from 'next/navigation';
-import { Link } from '@/i18n/navigation';
+
+import { Link, usePathname } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 
 const Nav = () => {
   const pathname = usePathname();
   const t = useTranslations('nav');
+  const isHomeActive = (pathname: string) => {
+    return (
+      pathname === '/' ||
+      pathname === '/en' ||
+      pathname === '/ru' ||
+      pathname.startsWith('/details')
+    );
+  };
   return (
     <nav className={navStyles.base}>
       <Link
         href="/"
         className={
-          pathname === '/' ||
-          pathname === '/en' ||
-          pathname === '/ru' ||
-          pathname.startsWith('/details')
-            ? navStyles.active
-            : navStyles.inactive
+          isHomeActive(pathname) ? navStyles.active : navStyles.inactive
         }
       >
         {t('home')}
@@ -25,7 +28,7 @@ const Nav = () => {
       <Link
         href="/about"
         className={
-          pathname === '/about' ? navStyles.active : navStyles.inactive
+          pathname.includes('about') ? navStyles.active : navStyles.inactive
         }
       >
         {t('about')}

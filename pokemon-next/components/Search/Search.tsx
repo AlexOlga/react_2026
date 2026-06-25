@@ -1,8 +1,7 @@
-'use server';
 import { searchAction } from './actions';
 import { inputStyles } from '@/shared/styles/input';
 import { buttonStyles } from '@/shared/styles/button';
-import { getTranslations } from 'next-intl/server';
+import { getLocale, getTranslations } from 'next-intl/server';
 
 interface SearchProps {
   query: string;
@@ -10,9 +9,10 @@ interface SearchProps {
 
 const Search = async ({ query }: SearchProps) => {
   const t = await getTranslations('search');
+  const locale = await getLocale();
   return (
     <div className="rounded-xl p-4  w-xl">
-      <form className="flex gap-3" action={searchAction}>
+      <form className="flex gap-3" action={searchAction.bind(null, locale)}>
         <input
           type="text"
           placeholder={t('placeholder')}

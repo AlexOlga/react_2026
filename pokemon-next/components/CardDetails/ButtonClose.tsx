@@ -1,7 +1,8 @@
 'use client';
 
+import { useRouter } from '@/i18n/navigation';
 import { buttonStyles } from '@/shared/styles/button';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 
 export function CloseButton() {
   const router = useRouter();

@@ -1,13 +1,10 @@
 import { Link } from '@/i18n/navigation';
 import { pageStyles } from '@/shared/styles/page';
 import { aboutPage } from '@/shared/text';
-import { getLocale, getTranslations } from 'next-intl/server';
+import { getTranslations } from 'next-intl/server';
 
 const About = async () => {
   const t = await getTranslations('about');
-  const locale = await getLocale();
-
-  console.log('SERVER LOCALE:', locale);
   return (
     <div className={pageStyles.container}>
       <h2 className={pageStyles.title}>{t('title')}</h2>

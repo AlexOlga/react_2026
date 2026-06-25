@@ -1,8 +1,17 @@
 'use server';
-import { redirect } from 'next/navigation';
+import { redirect } from '@/i18n/navigation';
 
-export async function searchAction(formData: FormData) {
+export async function searchAction(locale: string, formData: FormData) {
   const data = formData.get('query')?.toString() || '';
   const query = data.trim();
-  redirect(`/?query=${encodeURIComponent(query)}&page=1`);
+  redirect({
+    href: {
+      pathname: '/',
+      query: {
+        query,
+        page: '1',
+      },
+    },
+    locale,
+  });
 }

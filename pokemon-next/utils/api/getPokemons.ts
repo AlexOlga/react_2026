@@ -11,9 +11,8 @@ type PokemonUrl = {
 async function getPokemonsUrl(
   limit: number,
   offset: number,
-): Promise<ApiResponse<PokemonUrl>> {
-  console.log(URL_API, API_QUERY);
-  const data: ApiResponse<PokemonUrl> = await baseFetch(
+): Promise<ApiResponse<PokemonUrl> | null> {
+  const data: ApiResponse<PokemonUrl> | null = await baseFetch(
     `${URL_API}${API_QUERY.offset}${offset}&${API_QUERY.limit}${limit}`,
   );
   return data;
@@ -36,9 +35,10 @@ export async function getPokemonsData(
 async function getPokemons(
   limit: number,
   page: number,
-): Promise<ApiResponse<Pokemon>> {
+): Promise<ApiResponse<Pokemon> | null> {
   const offset = limit * (page - 1);
   const res = await getPokemonsUrl(limit, offset);
+  if (!res) return null;
   return {
     count: res.count,
     results: await getPokemonsData(res.results),
