@@ -1,18 +1,18 @@
 'use client';
 import { navStyles } from '../../shared/styles/nav';
-
+import { useLocale } from 'next-intl';
 import { Link, usePathname } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 
 const Nav = () => {
   const pathname = usePathname();
   const t = useTranslations('nav');
+  const locale = useLocale();
+  const localePrefix = `/${locale}`;
   const isHomeActive = (pathname: string) => {
     return (
       pathname === '/' ||
-      pathname === '/en' ||
-      pathname === '/ru' ||
-      pathname.startsWith('/details')
+      pathname === localePrefix      
     );
   };
   return (
