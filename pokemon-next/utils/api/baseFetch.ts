@@ -7,7 +7,7 @@ async function baseFetch<T>(url: string): Promise<T | null> {
       next: {
         revalidate: 180,
       },
-    });    
+    });
     if (res.status === 404 || res.status === 400) {
       return null;
     }

@@ -4,11 +4,11 @@ import { aboutPage } from '@/shared/text';
 import { getTranslations } from 'next-intl/server';
 
 const About = async () => {
-  const t = await getTranslations('about'); 
+  const t = await getTranslations('about');
   return (
     <div className={pageStyles.container}>
       <h2 className={pageStyles.title}>{t('title')}</h2>
-     
+
       <p className={pageStyles.text}>
         {t('text1')}
         <Link
