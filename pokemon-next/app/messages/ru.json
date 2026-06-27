@@ -1,0 +1,34 @@
+{
+  "search": {
+    "placeholder": "Поиск покемона ...",
+    "button": "Поиск"
+  },
+  "not found": {
+    "text": "Страница не найдена",
+    "link": "Назад"
+  },
+  "nav": {
+    "home": "Главная",
+    "about": "О нас"
+  },
+  "card details": {
+    "general": "Общие ",
+    "types": "Типы ",
+    "abilities": "Способности ",
+    "height": "Рост ",
+    "weight": "Вес ",
+    "baseExperience": "Базовый опыт "
+  },
+  "about": {
+    "title": "Об этом проекте",
+    "linkText": " RS School React Course ",
+    "linkUrl": "https://rs.school/courses/reactjs",
+    "text1": "Этот проект создан в рамках обучения в ",
+    "text2": "Основная цель этой работы заключалась в отработке современных возможностей React, маршрутизации и TypeScript."
+  },
+  "flyout": {
+    "unselect": "Удалить все",
+    "download": "Скачать",
+    "select": "покемона выделено"
+  }
+}
